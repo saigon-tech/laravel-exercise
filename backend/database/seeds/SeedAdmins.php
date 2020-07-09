@@ -13,9 +13,9 @@ class SeedAdmins extends Seeder
      */
     public function run()
     {
-        DB::table('admins')->insert([
-            'username' => str::random(10),
-            'password' => str::random(10),
+        DB::table('admin')->insert([
+            'username' => 'admin',
+            'password' => bcrypt('admin'),
             'email' => str::random(10).'@gmail.com',
         ]);
     }
