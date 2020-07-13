@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
 
-class SeedAdmins extends Seeder
+class AdminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,10 +13,10 @@ class SeedAdmins extends Seeder
      */
     public function run()
     {
-        DB::table('admin')->insert([
+        DB::table('admins')->insert([
             'username' => 'admin',
             'password' => bcrypt('admin'),
-            'email' => str::random(10).'@gmail.com',
+            'email' => str::random(10) . '@gmail.com',
         ]);
     }
 }
