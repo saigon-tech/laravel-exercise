@@ -20,7 +20,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'username'=>'required|exists:admins',
-            'password'=>'required|min:6',
+            'password'=>'required|min:3',
         ],[
             'username.required' =>'Bạn chưa nhập username',
             'password.required' => 'Bạn chưa nhập password',
