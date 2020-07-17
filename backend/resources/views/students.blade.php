@@ -30,7 +30,7 @@
         </div>
 
 
-        <div class="btn btn-outline-success" style="float: right; margin-top: 100px;"><a style="text-decoration: none; color: #4dc0b5;font-size: medium;" >Add student</a></div>
+        <div class="btn btn-outline-success" style="float: right; margin-top: 100px;"><a style="text-decoration: none; color: #4dc0b5;font-size: medium;" href="{{route('addstudent')}}">Add student</a></div>
     </div>
     <div class="row2">
         <table class="table table-striped table-hover">
@@ -67,7 +67,7 @@
                 @endphp
                 <tr>
                     <td><?= $no++ ?></td>
-                    <td>{{$student->name}}</td>
+                    <td><a href="{{route('editstudent',['id' => $student->id])}}" >{{$student->name}}</a></td>
                     <td>{{$student->birthday}}</td>
                     <td>{{$x}}</td>
                     <td>{{$y}}</td>
@@ -82,7 +82,7 @@
             @endforeach
             </thead>
         </table>
-        {{ $students->links()}}
+        {{$students->links()}}
     </div>
 </div>
 </body>

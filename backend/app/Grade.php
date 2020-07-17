@@ -9,4 +9,10 @@ class Grade extends Model
     protected $table = 'grades';
     protected $primaryKey = 'id';
     public $timestamps = false;
+
+    protected $fillable = [
+        'student_id',
+        'subject',
+        'grade',
+    ];
 }
