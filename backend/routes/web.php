@@ -13,6 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/','StudentsController@getDanhSach')->middleware('adminLogin');
+Route::get('login', function () {
+    return view('login');
+})->name('getLogin');;
+Route::post('login', 'LoginController@postLogin')->name('postLogin');
+
+Route::group(['middleware'=>'adminLogin'],function (){
+    Route::get('home', 'StudentsController@getDanhSach')->name('getStudent');
+    Route::get('search', 'StudentsController@search')->name('search');
+
+    Route::get('create', function () {
+        return view('create');
+    })->name('getCreateStudent');
+    Route::post('create', 'StudentsController@createStudent')->name('postCreateStudent');
+
+    Route::get('edit/{id}', 'StudentsController@getEdit')->name('getEditStudent');
+    Route::post('edit', 'StudentsController@editStudent')->name('postEditStudent');
 });
+
+Route::get('logout', function () {
+    if (Auth::check()) {
+        Auth::logout();
+        return redirect('login');
+    }
+})->name('logout');
