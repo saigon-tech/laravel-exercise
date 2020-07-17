@@ -14,6 +14,6 @@ class Student extends Model
     public $timestamps = false;
     public function subjects()
     {
-        return $this->hasMany('App\Subject');
+        return $this->hasMany('App\Grade');
     }
 }

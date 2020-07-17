@@ -21,7 +21,7 @@ Route::get('/login','Auth\LoginController@loginviews')->name('login');
 Route::post('/login','Auth\LoginController@check_login');
 
 Route::get('/student','Auth\StudentController@getStudents')->middleware('auth')->name('students');
-//Route::post('/student','StudentController@index');
+Route::post('/student/','Auth\StudentController@getStudents');
 
 Route::get('/logout', function (){
     if(Auth::check()){

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Student;
-use App\Subject;
+use App\Grade;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Auth;
@@ -16,15 +16,17 @@ class StudentController extends Controller
 {
     public function getStudents(Request $request)
     {
-        $students = Student::paginate(10);
-        foreach ($students as $student) {
-          //  $result['info'] = $student->subjects->toArray();
-            $result = [
-              key1 => value1
-            ];
-//            dump($student->subjects->where('subject', 1));
+
+        if($request->isMethod('post'))
+        {
+            $search = $request->input('search');
+            if($search != "")
+            {
+                $students = Student::where('name',$search)->paginate(10);
+                return view('students', ['students'=>$students]);
+            }
         }
-        dd($result);
-        return view('students', $result);
+        $students = Student::paginate(10);
+        return view('students', ['students'=>$students]);
     }
 }

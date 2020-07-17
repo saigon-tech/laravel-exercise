@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Signin</title>
+    <title>StudentList</title>
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="bootstrap.min.css">
@@ -45,8 +45,44 @@
                 <th scope="col">GPA</th>
                 <th scope="col">Pass</th>
             </tr>
+            <?php $no=1?>
+            @foreach($students as $student)
+                @php
+                   $x = $student->subjects->where('subject',1)->first();
+                    if ($x != NULL)
+                    $x = $x->grade;
+                    elseif ($x == NULL)
+                        $x = 0;
+                   $y = $student->subjects->where('subject',2)->first();
+                    if ($y != NULL)
+                    $y = $y->grade;
+                    elseif ($y == NULL)
+                        $y = 0;
+                    $z = $student->subjects->where('subject',3)->first();
+                    if ($z != NULL)
+                    $z = $z->grade;
+                    elseif ($z == NULL)
+                        $z = 0;
+                    $e = round(($x+$y+$z)/3,1);
+                @endphp
+                <tr>
+                    <td><?= $no++ ?></td>
+                    <td>{{$student->name}}</td>
+                    <td>{{$student->birthday}}</td>
+                    <td>{{$x}}</td>
+                    <td>{{$y}}</td>
+                    <td>{{$z}}</td>
+                    <td>{{$e}}</td>
+                    @if ($e>5)
+                        <td>Passed</td>
+                    @else
+                    <td>Failed</td>
+                    @endif
+                </tr>
+            @endforeach
             </thead>
         </table>
+        {{ $students->links()}}
     </div>
 </div>
 </body>
