@@ -23,6 +23,7 @@ class StudentsController extends Controller
                 return view('student')->with('data', $x);
             }
         }
+
         $x = $y->listST();
         return view('student')->with('data', $x);
     }

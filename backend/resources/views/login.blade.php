@@ -27,6 +27,7 @@
                     <li>{{$error}}</li>
                 @endforeach
             </ul>
+
         </div>
     @endif
     <form action="" method="post">

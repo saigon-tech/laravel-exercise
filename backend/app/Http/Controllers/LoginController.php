@@ -27,6 +27,7 @@ class LoginController extends Controller
             $username = $request->input('username');
             $password = $request->input('password');
 
+
         if(Auth::attempt(['username'=>$username,'password'=>$password]))
         {
             return redirect('student');

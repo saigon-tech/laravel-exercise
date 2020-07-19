@@ -48,6 +48,7 @@ class StudentModel extends Model
         return $student;
     }
 
+
     public  function  add($request)
     {
         $name = $request    ->input('name');

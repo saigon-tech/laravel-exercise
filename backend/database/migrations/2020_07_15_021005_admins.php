@@ -23,6 +23,7 @@ class Admins extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *

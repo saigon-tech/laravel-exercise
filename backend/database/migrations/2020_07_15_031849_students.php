@@ -11,6 +11,7 @@ class Students extends Migration
      *
      * @return void
      */
+
     public function up()
     {
         Schema::create('students', function (Blueprint $table)

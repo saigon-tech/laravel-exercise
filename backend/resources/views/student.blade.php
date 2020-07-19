@@ -22,6 +22,7 @@
             <button type="submit">Search</button>
         </form>
     </div>
+
     <table class="table table-bordered">
         <thead>
         <tr>
