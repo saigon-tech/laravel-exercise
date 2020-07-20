@@ -19,13 +19,13 @@ class StudentModel extends Model
                 as Math,sum(case when grades.subject = '2' then grades.grade else 0 end)
                 as Music,sum(case when grades.subject = '3' then grades.grade else 0 end)
                 as English"))
-            ->where('students.name', 'like',$search)
+            ->where('students.name', 'like','%'.$search.'%')
             ->groupBy('students.id','students.name','students.birthday')
-            ->paginate(10);
+            ->paginate(2);
         return $student;
     }
 
-    public  function  GetList()
+    public  function  GetList($sort ='ASC')
     {
         $student = DB::table('students')
             ->join('grades', 'students.id', '=', 'grades.student_id')
@@ -35,6 +35,7 @@ class StudentModel extends Model
             as Music,sum(case when grades.subject = '3' then grades.grade else 0 end)
             as English"))
             ->groupBy('students.id','students.name','students.birthday')
+            ->orderBy('students.name',''.$sort.'')
             ->paginate(5);
 
         return $student;

@@ -15,13 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class Login_controller extends Controller
 {
-    protected  function  validator()
-    {
-        return Validator::make($data,[
-           'username' => 'required|max:255',
-            'password' => 'required|min:0',
-        ]);
-    }
     public function index(Request $request)
     {
         return view('Login_view');
@@ -29,21 +22,41 @@ class Login_controller extends Controller
 
     public function  checklogin(Request $request)
     {
-        $this->validate($request,[
-           'username'=>'required|exists:admins',
-            'password'=>'required|min:3',
-        ]);
-
-            $username = $request->input("username");
-            $passwrod = $request->input('password');
-            if(Auth::attempt(['username'=>$username,'password'=>$passwrod]))
-            {
+        $validator = Validator::make($request->all(),
+            [
+                'username' => 'bail|required|exists:admins',
+                'password' => 'bail|required',
+            ],
+            [
+                'username.exists' => 'Account not exist',
+            ]);
+        if ($validator->fails())
+        {
+            return redirect('login')
+                ->withErrors($validator)
+                ->withInput();
+        }
+        else
+        {
+            $credentials = $request->only('username', 'password');
+            if (Auth::attempt($credentials)) {
                 return redirect('student');
+            } else {
+                return redirect('login')
+                    ->with('thongBao','Login failed, please check your password');
             }
-            else
-            {
-                return back()->with('error','Wrong Login Details');
-            }
+        }
+
+//            $username = $request->input("username");
+//            $passwrod = $request->input('password');
+//            if(Auth::attempt(['username'=>$username,'password'=>$passwrod]))
+//            {
+//                return redirect('student');
+//            }
+//            else
+//            {
+//                return back()->with('error','Wrong Login Details');
+//            }
 
     }
 

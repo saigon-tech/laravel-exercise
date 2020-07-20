@@ -32,12 +32,21 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" placeholder="Enter Username" name="username">
+            <input type="text" class="form-control @error('username') is-invalid @enderror" id="username" placeholder="Enter Username" name="username">
         </div>
+        @error('username')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
         <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+            <input type="password" class="form-control form-control @error('password') is-invalid @enderror" id="pwd" placeholder="Enter password" name="password">
         </div>
+        @error('password')
+        <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
+        @if(session('thongBao'))
+            <div class="alert alert-danger">{{session('thongBao')}}</div>
+        @endif
         <div class="form-group form-check">
             <label class="form-check-label">
                 <input class="form-check-input" type="checkbox" name="remember"> Remember me

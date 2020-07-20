@@ -28,6 +28,7 @@ Route::post('/addstudent','Students_controller@addstudent');
 
 Route::get('/editstudent/{id}','Students_controller@editstudent')->middleware('auth')->name('editstudent');
 Route::post('/editstudent','Students_controller@editstudent')->name('editstudent.edit');
+Route::post('/shortstudent','Students_controller@editstudent')->name('sortstudent');
 
 Route::get('/logout', function (){
     if(Auth::check()){

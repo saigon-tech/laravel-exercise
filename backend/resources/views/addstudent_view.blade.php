@@ -17,12 +17,20 @@
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-row">
             <label class="col-sm-2 col-form-label"  for="name">Name</label>
-            <input type="text" class="form-control col-sm-10" name="name"/>
+            <input type="text" class="form-control col-sm-10 @error('name') is-invalid @enderror" name="name"/>
+            @error('name')
+            <div class="col-sm-2"></div><div class="alert alert-danger form-control col-sm-10" >{{$message}}</div>
+            @enderror
         </div>
+
         <div class="form-row" style="margin-top: 10px;">
             <label class="col-sm-2 col-form-label"  for="birthday">Birthday</label>
-            <input type="text" class="form-control col-sm-10" name="birthday" />
+            <input type="text" class="form-control col-sm-10 @error('birthday') is-invalid @enderror"  name="birthday" />
+            @error('birthday')
+            <div class="col-sm-2"></div><div class="alert alert-danger form-control col-sm-10" >{{$message}}</div>
+            @enderror
         </div>
+
         <div class="form-row" style="margin-top: 10px;">
             <label class="col-sm-2 col-form-label"  for="math">Math</label>
             <select class="form-control col-sm-10" name="math">

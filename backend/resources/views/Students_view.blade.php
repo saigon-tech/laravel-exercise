@@ -26,12 +26,14 @@
 
         <div class="btn btn-outline-success" style="float: right; margin-top: 100px;"><a href="{{route('addstudent')}}" style="text-decoration: none; color: #4dc0b5;font-size: medium;" >Add student</a></div>
     </div>
-    <div class="row2">
+    <div class="row2" id="employee_table">
+
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">NO</th>
+                    <th scope="col"><a id="clumn_" onclick="value_sort()" href="#" >Name</a></th>
+                    <input type="hidden" id="value_changle" value="DESC">
                     <th scope="col">Birthday</th>
                     <th scope="col">Math</th>
                     <th scope="col">Music</th>
@@ -53,7 +55,7 @@
                     <td>{{$item->Math}}</td>
                     <td>{{$item->Music}}</td>
                     <td>{{$item->English}}</td>
-                    <td>{{($item->Math+$item->Music+$item->English)/3}}</td>
+                    <td>{{round(($item->Math+$item->Music+$item->English)/3,1)}}</td>
                     @php
                         $i+=1;
                         $pass = ($item->Math+$item->Music+$item->English)/3;
@@ -63,9 +65,6 @@
                     @else
                         <td>N</td>
                     @endif
-
-
-
                 </tr>
                 @endforeach
                 </tbody>
@@ -77,4 +76,25 @@
 
 
 </body>
+</html>
 
+<script>
+
+    function value_sort() {
+        var x = $('#value_changle').val();
+        $('#value_changle').val(x == "ASC" ? "DESC" : "ASC");
+
+        $.ajax({
+           type: 'get',
+            url: '{{\Illuminate\Support\Facades\URL::to('student')}}',
+            data: {
+                'sort' : x
+            },
+            success: function (data) {
+                $('tbody').html(data);
+            }
+        });
+
+    }
+
+</script>
