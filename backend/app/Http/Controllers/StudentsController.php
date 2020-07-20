@@ -24,6 +24,30 @@ class StudentsController extends Controller
             }
         }
 
+        elseif ($request->ajax())
+        {
+            $x = $y->ListST($request->sort);
+            $output = '';
+            $i = 1;
+            foreach ($x as $st)
+            {
+                $tb= ($st->Math + $st->Music + $st->English) / 3;
+                $pass = $tb >5 ? 'Y' : 'N' ;
+                $output .= '<tr>
+                <td>'.$i.'</td>
+                <td><a href="'.route('edit',['id'=>$st->id]).'">'.$st->name.'</a></td>
+                <td>'.\DateTime::createFromFormat('Y-m-d', $st->birthday)->format('Y/m/d').'</td>
+                <td>'.$st->Math.'</td>
+                <td>'.$st->Math.'</td>
+                <td>'.$st->Math.'</td>
+                <td>'.round($tb,1).'</td>
+                <td>'.$pass.'</td>
+                </tr>';
+                $i+=1;
+            }
+            return response($output);
+        }
+
         $x = $y->listST();
         return view('student')->with('data', $x);
     }

@@ -27,7 +27,8 @@
         <thead>
         <tr>
             <th>NO</th>
-            <th>Name</th>
+            <th><a onclick="value_sort()" data-oder="DESC">Name</a></th>
+            <input type="hidden" id="value_changle" value="DESC">
             <th>Birthday</th>
             <th>Math</th>
             <th>Music</th>
@@ -63,7 +64,23 @@
         @endforeach
         </tbody>
     </table>
+    <div style="float: right;" class="search-container">{{ $data->links() }}</div>
 </div>
-<div style="float: right;" class="search-container">{{ $data->links() }}</div>
 </body>
 </html>
+<script>
+    function value_sort() {
+        var x = $('#value_changle').val();
+        $('#value_changle').val(x == "ASC" ? "DESC" : "ASC");
+        $.ajax({
+            type: 'get',
+            url: '{{\Illuminate\Support\Facades\URL::to('student')}}',
+            data: {
+                'sort' : x
+            },
+            success: function (data) {
+                $('tbody').html(data);
+            }
+        });
+    }
+</script>

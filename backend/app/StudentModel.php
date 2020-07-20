@@ -33,7 +33,7 @@ class StudentModel extends Model
         return response()->json($students);
     }
 
-    public function listST()
+    public function listST($sort = 'ASC')
     {
         $student = DB::table('students')
         ->join('grades', 'students.id', '=', 'grades.student_id')
@@ -43,6 +43,7 @@ class StudentModel extends Model
             as Music,sum(case when grades.subject = '3' then grades.grade else 0 end)
             as English"))
         ->groupBy('students.id','students.name','students.birthday')
+            ->orderBy('students.name', ''.$sort.'')
             ->paginate(10);
 
         return $student;
