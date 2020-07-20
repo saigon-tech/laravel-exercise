@@ -29,35 +29,40 @@ class StudentController extends Controller
         $students = Student::paginate(10);
         return view('students', ['students'=>$students]);
     }
+    public function viewAddstudent(Request $request)
+    {
+        return view('aestudent');
+    }
     public function  addStudent(Request $request)
     {
-        $student = new Student();
+        $students = new Student();
         if($request->isMethod('post'))
         {
-            $student->name = $request->name;
-            $student->birthday = $request->birthday;
-            $student->save();
+            $students->name = $request->name;
+            $students->birthday = $request->birthday;
+            $students->save();
 
             if ($request->math != NULL) {
-                $student->subjects()->save(new Grade([
+                $students->subjects()->save(new Grade([
                     'subject' => '1',
                     'grade' => $request->math,
                 ]));
             }
             if ($request->music != NULL) {
-                $student->subjects()->save(new Grade([
+                $students->subjects()->save(new Grade([
                     'subject' => '2',
                     'grade' => $request->music,
                 ]));
             }
             if ($request->english != NULL) {
-                $student->subjects()->save(new Grade([
+                $students->subjects()->save(new Grade([
                     'subject' => '3',
                     'grade' => $request->english,
                 ]));
             }
         }
-        return view('aestudent', ['student'=>$student]);
+        //return view('students', ['students'=>$students]);
+        return redirect()->route('students');
     }
     public function showEditstudent($id)
     {
@@ -66,7 +71,7 @@ class StudentController extends Controller
         {
             return view('students');
         }
-        return view('aestudent', ['student' => $student]);
+        return view('editstudent', ['students'=>$student]);
     }
 
     public function  editStudent(Request $request, $id)
@@ -79,37 +84,37 @@ class StudentController extends Controller
             $student->save();
 
             if ($request->math != NULL) {
-                $student->subjects()->save(Grade([
+                $student->subjects()->save(new Grade([
                     'subject' => '1',
                     'grade' => $request->math,
                 ]));
             } else
             {
-                $student->subjects()->save(Grade([
+                $student->subjects()->save(new Grade([
                     'subject' => '1',
                     'grade' => '0',
                 ]));
             }
             if ($request->music != NULL) {
-                $student->subjects()->save(Grade([
+                $student->subjects()->save(new Grade([
                     'subject' => '2',
                     'grade' => $request->music,
                 ]));
             } else
             {
-                $student->subjects()->save(Grade([
+                $student->subjects()->save(new Grade([
                     'subject' => '2',
                     'grade' => '0',
                 ]));
             }
             if ($request->english != NULL) {
-                $student->subjects()->save(Grade([
+                $student->subjects()->save(new Grade([
                     'subject' => '3',
                     'grade' => $request->english,
                 ]));
             } else
             {
-                $student->subjects()->save(Grade([
+                $student->subjects()->save(new Grade([
                     'subject' => '3',
                     'grade' => '0',
                 ]));
