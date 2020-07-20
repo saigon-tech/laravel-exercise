@@ -15,10 +15,36 @@ class StudentsController extends Controller
     {
         $student = new Student();
         $students = $student->student();
-        return view('home')->with('data', $students);
+        $direct = 'ASC';
+        return view('home')->with('data', $students)->with('sorted', $direct);
+    }
+
+    public function sort($direct)
+    {
+        $student = new Student();
+        $students = $student->sort($direct);
+        if($direct == 'ASC')
+        {
+            $direct = 'DESC';
+        } else
+        {
+            $direct = 'ASC';
+        }
+        return view('home')->with('sorted', $direct)->with('data', $students);
     }
 
     public function search(Request $request)
+    {
+        $student = new Student();
+        $search = $request->input('search');
+        $direct = 'ASC';
+        if ($search != "") {
+            $students = $student->search($request);
+            return view('home')->with('data', $students)->with('sorted', $direct);
+        }
+    }
+
+    public function quickSearch(Request $request)
     {
         if ($request->ajax()) {
             $output = '';

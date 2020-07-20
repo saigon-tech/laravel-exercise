@@ -5,11 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Request;
-
+use Kyslik\ColumnSortable\Sortable;
 class Student extends Model
 {
     protected $table = 'students';
+
+    use Sortable;
+
+    protected $fillable = [
+        'id', 'name', 'birthday',
+    ];
+    public $sortable = ['id', 'name', 'birthday'];
 
     public function student()
     {
@@ -25,7 +31,22 @@ class Student extends Model
         return $students;
     }
 
-    public function search(Request $request)
+    public function sort($direct)
+    {
+        $students = DB::table('students')
+            ->join('grades', 'students.id', '=', 'grades.student_id')
+            ->select(DB::raw("students.id,students.name,students.birthday,
+            sum(case when grades.subject = '1' then grades.grade else 0 end)
+            as Math,sum(case when grades.subject = '2' then grades.grade else 0 end)
+            as Music,sum(case when grades.subject = '3' then grades.grade else 0 end)
+            as English"))
+            ->groupBy('students.id', 'students.name', 'students.birthday')
+            ->orderBy('name', $direct)
+            ->paginate(10);
+        return $students;
+    }
+
+    public function search($request)
     {
         $student = DB::table('students')
             ->join('grades', 'students.id', '=', 'grades.student_id')
@@ -36,7 +57,7 @@ class Student extends Model
             as English"))
             ->where('name', 'LIKE', '%' . $request->search . '%')
             ->groupBy('students.id', 'students.name', 'students.birthday')
-            ->paginate(10);
+            ->paginate(5);
         return $student;
     }
 
@@ -133,9 +154,7 @@ class Student extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'id', 'name', 'birthday',
-    ];
+
 
     /**
      * The attributes that should be hidden for arrays.

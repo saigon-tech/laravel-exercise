@@ -31,7 +31,8 @@
     </nav>
 
     <form class="form-inline my-2 my-lg-0" method="get" action="search">
-        Name:<input style="text-transform: capitalize" id="search" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        Name:<input style="text-transform: capitalize" id="search" class="form-control mr-sm-2" type="search"
+                    placeholder="Search" aria-label="Search" name="search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
 
@@ -43,8 +44,12 @@
             <table class="table table-striped" id="myTable">
                 <thead>
                 <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">Name</th>
+                    <th scope="col" onclick="window.location='{{route('getStudent')}}'" id="id">No</th>
+                    <th scope="col" id="name"
+                        onclick="window.location='{{route('sort',['direct' => $sorted ])}}'"
+                    ><a style="color: #1b1e21" href="#">Name</a>
+{{--                        <a href="{{$sorted}}">Name</a>--}}
+                    </th>
                     <th scope="col">Birthday</th>
                     <th scope="col">Math</th>
                     <th scope="col">Music</th>
@@ -83,24 +88,31 @@
     //     $('#myTable').DataTable();
     //
     // });
-    $('#search').on('keyup', function () {
-        $value = $(this).val();
-        $.ajax({
-            type: 'get',
-            url: '{{ URL::to('search') }}',
-            data: {
-                'search': $value
-            },
-            success: function (data) {
-                $('tbody').html(data);
-            }
-        });
-    })
-    jQuery(document).ready(function($) {
-        $(".clickable-row").click(function() {
+
+    {{--$('#search').on('keyup', function () {--}}
+    {{--    $value = $(this).val();--}}
+    {{--    $.ajax({--}}
+    {{--        type: 'get',--}}
+    {{--        url: '{{ URL::to('quickSearch') }}',--}}
+    {{--        data: {--}}
+    {{--            'search': $value--}}
+    {{--        },--}}
+    {{--        success: function (data) {--}}
+    {{--            $('tbody').html(data);--}}
+    {{--        }--}}
+    {{--    });--}}
+    {{--})--}}
+
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
             window.location = $(this).data("href");
         });
     });
+
+    function url() {
+        var url = window.location.pathname;
+        return url;
+    }
 </script>
 </body>
 
