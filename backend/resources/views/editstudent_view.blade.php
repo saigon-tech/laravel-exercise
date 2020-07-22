@@ -16,53 +16,68 @@
     <form action="{{route('editstudent.edit')}}" method="POST">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
         <div class="form-row">
-            <label class="col-sm-2 col-form-label"  for="name">Name</label>
-            <input type="text" class="form-control col-sm-10 @error('name') is-invalid @enderror" name="name" value="@foreach($data as $item) {{$item->name}} @endforeach"/>
+            <label class="col-sm-2 col-form-label" for="name">Name</label>
+            <input type="text" class="form-control col-sm-10 @error('name') is-invalid @enderror" name="name"
+                   value="@foreach($data as $item) {{$item->name}} @endforeach"/>
             @error('name')
-            <div class="col-sm-2"></div><div class="alert alert-danger form-control col-sm-10" >{{$message}}</div>
+            <div class="col-sm-2"></div>
+            <div class="alert alert-danger form-control col-sm-10">{{$message}}</div>
             @enderror
         </div>
         <div class="form-row" style="margin-top: 10px;">
-            <label class="col-sm-2 col-form-label"  for="birthday">Birthday</label>
-            <input type="date" class="form-control col-sm-10 @error('birthday') is-invalid @enderror" name="birthday" value="@foreach($data as $item){{$item->birthday}}@endforeach" />
+            <label class="col-sm-2 col-form-label" for="birthday">Birthday</label>
+            <input type="date" min="1980-01-01" max="2020-01-01"
+                   class="form-control col-sm-10 @error('birthday') is-invalid @enderror" name="birthday"
+                   value="@foreach($data as $item){{$item->birthday}}@endforeach"/>
             @error('birthday')
-            <div class="col-sm-2"></div><div class="alert alert-danger form-control col-sm-10" >{{$message}}</div>
+            <div class="col-sm-2"></div>
+            <div class="alert alert-danger form-control col-sm-10">{{$message}}</div>
             @enderror
         </div>
         <div class="form-row" style="margin-top: 10px;">
-            <label class="col-sm-2 col-form-label"  for="math">Math</label>
-            <select class="form-control col-sm-10" name="math" >
+            <label class="col-sm-2 col-form-label" for="math">Math</label>
+            <select class="form-control col-sm-10" name="math">
                 @for($i=1;$i<=10;$i++)
-                    <option value = "{{$i}}" @foreach($data as $item) @if($item->Math==$i) selected @endif @endforeach >
+                    <option value="{{$i}}" @foreach($data as $item) @if($item->Math==$i) selected @endif @endforeach >
                         {{$i}}
                     </option>
                 @endfor
             </select>
         </div>
         <div class="form-row" style="margin-top: 10px;">
-            <label class="col-sm-2 col-form-label"  for="music">Music</label>
+            <label class="col-sm-2 col-form-label" for="music">Music</label>
             <select class="form-control col-sm-10" name="music">
-                @for($i=1;$i<=10;$i++)
-                    <option value = "{{$i}}" @foreach($data as $item) @if($item->Music==$i) selected @endif @endforeach >
+                @for($i=0;$i<=10;$i++)
+                    <option value="{{$i}}" @foreach($data as $item) @if($item->Music==$i) selected @endif @endforeach >
                         {{$i}}
                     </option>
                 @endfor
             </select>
         </div>
         <div class="form-row" style="margin-top: 10px;">
-            <label class="col-sm-2 col-form-label"  for="english">English</label>
+            <label class="col-sm-2 col-form-label" for="english">English</label>
             <select class="form-control col-sm-10" name="english">
                 @for($i=1;$i<=10;$i++)
-                    <option value = "{{$i}}" @foreach($data as $item) @if($item->English==$i) selected @endif @endforeach >
+                    <option value="{{$i}}"
+                            @foreach($data as $item) @if($item->English==$i) selected @endif @endforeach >
                         {{$i}}
                     </option>
                 @endfor
             </select>
         </div>
         <br>
-        <button type="submit" class="btn btn-primary"  name="idedit" style="float: right;" value="@foreach($data as $item) {{$item->id}} @endforeach">Submit</button>
+        <button style="float: right; " class="btn btn-secondary" onclick="goBack()">Cancel</button>
+        <button style="float: right;margin-right: 798px;" type="submit" class="btn btn-primary" name="idedit"
+                style="float: right;" value="@foreach($data as $item) {{$item->id}} @endforeach">Save
+        </button>
+
     </form>
 </div>
-
 </body>
 </html>
+<script>
+    function goBack() {
+        window.history.back();
+
+    }
+</script>

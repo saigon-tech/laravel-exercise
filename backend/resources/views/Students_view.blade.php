@@ -13,44 +13,53 @@
 <div class="container">
     <div class="row1">
         <div class="col-lg-6" style="float: left;">
-            <form class="form-inline my-2 my-lg-0" method="post">
-                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <form class="form-inline my-2 my-lg-0" method="get">
+
                 <lable>Searching By Name</lable>
-                <input style="margin-left: 5px;" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+
+                <input style="margin-left: 5px;" class="form-control mr-sm-2" type="search" placeholder="Search"
+                       aria-label="Search" name="search" value="{{isset($search)? $search : ''}}">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
 
-            <div style="float: right"><a href="{{route('logout')}}">Logout</a></div>
+        <div style="float: right"><a href="{{route('logout')}}">Logout</a></div>
         <br>
-
-        <div class="btn btn-outline-success" style="float: right; margin-top: 100px;"><a href="{{route('addstudent')}}" style="text-decoration: none; color: #4dc0b5;font-size: medium;" >Add student</a></div>
+        <div class="btn btn-outline-success" style="float: right; margin-top: 100px;"><a
+                href="{{route('student.create')}}" style="text-decoration: none; color: #4dc0b5;font-size: medium;">Add
+                student</a></div>
     </div>
     <div class="row2" id="employee_table">
 
-            <table class="table table-striped table-hover">
-                <thead>
-                <tr>
-                    <th scope="col">NO</th>
-                    <th scope="col"><a id="clumn_" onclick="value_sort()" href="#" >Name</a></th>
-                    <input type="hidden" id="value_changle" value="DESC">
-                    <th scope="col">Birthday</th>
-                    <th scope="col">Math</th>
-                    <th scope="col">Music</th>
-                    <th scope="col">English</th>
-                    <th scope="col">GPA</th>
-                    <th scope="col">Pass</th>
-                </tr>
-                </thead>
-                <tbody>
-                @php
-                    $i=1;
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th scope="col">NO</th>
+                <th scope="col">
+                    <form id="sort" method="get">
+                        <lable><a onclick="sbt()">Name</a></lable>
+                        <input type="hidden" name="sort" value="{{(isset($sort)?($sort==='ASC'?'DESC':"ASC"):'ASC')}}">
 
-                @endphp
-                @foreach($data as $item)
+                    </form>
+                </th>
+                <input type="hidden" id="value_changle" value="DESC">
+                <th scope="col">Birthday</th>
+                <th scope="col">Math</th>
+                <th scope="col">Music</th>
+                <th scope="col">English</th>
+                <th scope="col">GPA</th>
+                <th scope="col">Pass</th>
+            </tr>
+            </thead>
+            <tbody>
+            @php
+                $i=1;
+
+            @endphp
+            @foreach($data as $item)
                 <tr>
                     <th>{{$i}}</th>
-                    <td><a href="{{route('editstudent', ['id' => $item->id])}}">{{$item->name}}</a></td>
+                    <td><a href="{{route('student.edit', ['id' => $item->id])}}">{{$item->name}}</a></td>
                     <td>{{\DateTime::createFromFormat('Y-m-d', $item->birthday)->format('Y/m/d')}}</td>
                     <td>{{$item->Math}}</td>
                     <td>{{$item->Music}}</td>
@@ -66,12 +75,12 @@
                         <td>N</td>
                     @endif
                 </tr>
-                @endforeach
-                </tbody>
-            </table>
+            @endforeach
+            </tbody>
+        </table>
 
     </div>
-    <div style="float: right;">{{ $data->links() }}</div>
+    {{ $data->appends(Request::all())->links() }}
 </div>
 
 
@@ -79,22 +88,7 @@
 </html>
 
 <script>
-
-    function value_sort() {
-        var x = $('#value_changle').val();
-        $('#value_changle').val(x == "ASC" ? "DESC" : "ASC");
-
-        $.ajax({
-           type: 'get',
-            url: '{{\Illuminate\Support\Facades\URL::to('student')}}',
-            data: {
-                'sort' : x
-            },
-            success: function (data) {
-                $('tbody').html(data);
-            }
-        });
-
+    function sbt() {
+        $('#sort').submit();
     }
-
 </script>

@@ -28,6 +28,6 @@ class StudentsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('students');
     }
 }

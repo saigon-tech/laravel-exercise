@@ -30,6 +30,6 @@ class GradesTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('grades');
     }
 }
