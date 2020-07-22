@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,5 +13,13 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call(UserSeeder::class);
+
+        for ($i=0;$i<50;$i++)
+        {
+            DB::table('students')->insert([
+                'name' => Str::random(10),
+                'birthday' => carbon::create('03/10/2000'),
+            ]);
+        }
     }
 }
