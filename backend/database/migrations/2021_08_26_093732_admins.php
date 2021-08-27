@@ -18,7 +18,7 @@ class Admins extends Migration
             $table->id();
             $table->string('username', 20)->unique();
             $table->string('password', 255);
-            $table->string('email', 50)->unique();
+            $table->string('email', 20)->unique();
         });
     }
 
