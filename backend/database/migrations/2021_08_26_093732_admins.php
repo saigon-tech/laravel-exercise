@@ -19,7 +19,6 @@ class Admins extends Migration
             $table->string('username', 20)->unique();
             $table->string('password', 255);
             $table->string('email', 50)->unique();
-            $table->timestamps();
         });
     }
 

@@ -19,7 +19,6 @@ class Grades extends Migration
             $table->foreign('student_id')->references('id')->on('admins');
             $table->unsignedSmallInteger('subject');
             $table->unsignedSmallInteger('grade');
-            $table->timestamps();
         });
 
     }

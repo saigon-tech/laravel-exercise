@@ -17,7 +17,6 @@ class Students extends Migration
             $table->id();
             $table->string('username', 20);
             $table->date('birthday');
-            $table->timestamps();
         });
     }
 
