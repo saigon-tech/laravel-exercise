@@ -17,10 +17,11 @@ class Grades extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->foreign('student_id')->references('id')->on('admins');
-            $table->unsignedBigInteger('subject');
-            $table->unsignedBigInteger('grade');
+            $table->unsignedSmallInteger('subject');
+            $table->unsignedSmallInteger('grade');
             $table->timestamps();
         });
+
     }
 
     /**
