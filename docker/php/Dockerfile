@@ -5,6 +5,9 @@ RUN ["apt-get", "install", "-y", "libpng-dev"]
 RUN ["apt-get", "install", "-y", "zlib1g-dev"]
 RUN ["apt-get", "install", "-y", "libonig-dev"]
 RUN ["apt-get", "install", "-y", "libpq-dev"]
+RUN ["apt-get", "install", "-y", "nodejs"]
+RUN ["npm", "install"]
+RUN ["npm", "run", "dev"]
 
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd \
   && docker-php-ext-install mbstring gd pdo pdo_mysql mysqli pdo_pgsql
