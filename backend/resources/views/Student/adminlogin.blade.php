@@ -27,8 +27,13 @@
                 </div>
             @endif
         </div>
-        <input name="username" placeholder="Username" type="text" required="" class="@error('username') is-invalid @enderror">
-        <input name="password" placeholder="Password" type="password" required="" class="@error('password') is-invalid @enderror">
+        <input name="username" placeholder="Username" type="text" required="">
+        <input name="password" placeholder="Password" type="password" required="">
         <button name="submit" type="submit">LOGIN</button>
+        <ul class="alert text-danger" style="margin-left: 1.5rem;">
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
     </form>
 @endsection

@@ -17,5 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('adminLogin', 'AdminController@index')->name('adminLogin');
-Route::post('adminLogin', 'AdminController@login');
+Route::get('/adminLogin', ['as' => 'adminLogin', 'uses' =>'AdminController@index']);
+Route::post('/adminLogin', ['as' => 'adminLogin', 'uses' =>'AdminController@login']);
+
+Route::get('/testLogin', function() {
+        return view('Student.testlogin');
+})->name('testLogin')->middleware('auth');
+
