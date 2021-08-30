@@ -1,0 +1,31 @@
+#search {
+    width: 50%;
+}
+#add {
+    order: 1;
+    align-self: flex-end;
+}
+#list_student {
+    order: 2;
+    margin-top: 2rem;
+    align-self: center;
+    width: 100% !important;
+}
+nav {
+    order: 2;
+}
+.pagination {
+    justify-content: flex-end;
+}
+.page-item.active .page-link {
+    background-color: #198754;
+    border-color: #198754;
+}
+.page-link:hover {
+    color: #198754;
+}
+.page-link {
+    color: #198754;
+}
+
+

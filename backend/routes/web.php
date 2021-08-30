@@ -19,3 +19,5 @@ Route::get('/', function () {
 
 Route::get('admin-login', 'AdminController@index')->name('admin-login');
 Route::post('admin-login', 'AdminController@login');
+
+Route::resource('student-manager', 'StudentController');

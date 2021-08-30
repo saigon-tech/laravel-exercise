@@ -16,7 +16,7 @@ class AdminController extends Controller
         $admins = Admin::all();
         foreach($admins as $admin) {
             if($request->username == $admin->username and $request->password == $admin->password) {
-                return redirect()->back()->with('msg', 'Đăng nhập thành công!');
+                return redirect()->route('student-manager.index')->with('admin', $admin);
             }
         }
         return redirect()->back()->with('msg', 'Sai tên tài khoản hoặc mật khẩu!');
