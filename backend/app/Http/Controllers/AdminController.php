@@ -3,22 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Admin;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
+    public function index(Request  $request) {
         return view('Student.adminlogin');
     }
 
     public function login(Request $request) {
-        $admins = Admin::all();
-        foreach($admins as $admin) {
-            if($request->username == $admin->username and $request->password == $admin->password) {
-                return redirect()->route('student-manager.index')->with('admin', $admin);
-            }
+        $validator = Validator::make($request->all(), [
+            'username' => 'required|max:20',
+            'password' => 'required|max:255|min:5',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
         }
-        return redirect()->back()->with('msg', 'Sai tên tài khoản hoặc mật khẩu!');
+
+        $validated = $request->only('username', 'password');
+        if (Auth::attempt($validated)) {
+            return redirect('testLogin');
+        } else {
+            return redirect()->back()->withErrors('Sai tên tài khoản hoặc mật khẩu!')->withInput();
+        }
     }
 }

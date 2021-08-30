@@ -76,7 +76,7 @@
                 <div class="title m-b-md">
                     Laravel Exercise
                 </div>
-                <form action="/admin-login" method="get">
+                <form action="/adminLogin" method="get">
                     <button id="get-start" type="submit" class="btn btn-info">LOGIN</button>
                 </form>
             </div>
