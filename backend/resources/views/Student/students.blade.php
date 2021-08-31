@@ -15,13 +15,13 @@
         <a href="/">HOME</a>
     </div>
     <div class="top-right links">
-        <a>Admin:
-            @if(session('admin'))
-                {{session('admin')->username}}
+        <a>User:
+            @if($admin)
+                {{$admin}}
             @endif
         </a>
 
-        <a href="/">LOGOUT</a>
+        <a href="{{route('logout')}}">LOGOUT</a>
     </div>
 @endsection
 
@@ -70,51 +70,24 @@
     {{ $students->links() }}
 @endsection
 @push('js')
-
-    {{--    <script>--}}
-    {{--        function myFunction() {--}}
-    {{--            let input, filter, table, tr, td, i, txtValue;--}}
-    {{--            input = document.getElementById("myInput");--}}
-    {{--            filter = input.value.toUpperCase();--}}
-    {{--            table = document.getElementById("table");--}}
-    {{--            tr = table.getElementsByTagName("tr");--}}
-    {{--            for (i = 0; i < tr.length; i++) {--}}
-    {{--                td = tr[i].getElementsByTagName("td")[0];--}}
-    {{--                if (td) {--}}
-    {{--                    txtValue = td.textContent || td.innerText;--}}
-    {{--                    if (txtValue.toUpperCase().indexOf(filter) > -1) {--}}
-    {{--                        tr[i].style.display = "";--}}
-    {{--                    } else {--}}
-    {{--                        tr[i].style.display = "none";--}}
-    {{--                    }--}}
-    {{--                }--}}
-    {{--            }--}}
-    {{--        }--}}
-    {{--    </script>--}}
-
     <script>
         function myFunction() {
             let input, filter, table, tr, td, i, txtValue;
             input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
-            // table = document.getElementById("table");
-            // tr = table.getElementsByTagName("tr");
-            let data = '{{$students}}';
-            let r = data
-            console.log(r);
-            // for (i = 0; i < data.length; i++) {
-            //     // td = tr[i].getElementsByTagName("td")[0];
-            //     td = tr[i].name;
-            //     if (td) {
-            //         txtValue = td.textContent || td.innerText;
-            //         if (txtValue.toUpperCase().indexOf(filter) > -1) {
-            //             tr[i].style.display = "";
-            //         } else {
-            //             tr[i].style.display = "none";
-            //         }
-            //     }
-            // }
+            table = document.getElementById("table");
+            tr = table.getElementsByTagName("tr");
+            @foreach($students as $student)
+                td = Object.values(@json($student))[1];
+                if (td) {
+                    txtValue = td;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[Object.values(@json($student))[0]].style.display = "";
+                    } else {
+                        tr[Object.values(@json($student))[0]].style.display = "none";
+                    }
+                }
+            @endforeach
         }
     </script>
-
 @endpush

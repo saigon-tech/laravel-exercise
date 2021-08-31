@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -34,7 +35,8 @@ class StudentController extends Controller
                 $student->pass = 'N';
             }
         }
-        return view('Student.students', ['students' => $students]);
+        $admin = Auth::user()->username;
+        return view('Student.students')->with('admin', $admin)->with('students', $students);
     }
 
     /**
