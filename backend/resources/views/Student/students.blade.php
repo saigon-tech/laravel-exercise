@@ -26,11 +26,17 @@
 @endsection
 
 @section('content')
-    <div id="search">
-        <form class="d-flex">
-            <input id="myInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search"
-                   onkeyup="myFunction()">
+    <div id="searchdiv">
+        <form class="d-flex" action="{{route('studentManager.search')}}" method="post" style="position:relative;">
+            @csrf
+            <input id="search" class="form-control me-2" name="search" placeholder="Search" aria-label="Search" type="text">
+            <button id="get-start" type="submit" class="btn btn-info">Search</button>
         </form>
+        <ul class="alert text-danger" style="margin-left: 1.5rem; position: absolute;">
+            @foreach($errors->all() as $error)
+                <li>{{$error}}</li>
+            @endforeach
+        </ul>
     </div>
     <div id="add">
         <form>
@@ -67,27 +73,7 @@
             </tbody>
         </table>
     </div>
-    {{ $students->links() }}
+    @if ($students instanceof \Illuminate\Pagination\AbstractPaginator)
+        {{ $students->links() }}
+    @endif
 @endsection
-@push('js')
-    <script>
-        function myFunction() {
-            let input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("table");
-            tr = table.getElementsByTagName("tr");
-            @foreach($students as $student)
-                td = Object.values(@json($student))[1];
-                if (td) {
-                    txtValue = td;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        tr[Object.values(@json($student))[0]].style.display = "";
-                    } else {
-                        tr[Object.values(@json($student))[0]].style.display = "none";
-                    }
-                }
-            @endforeach
-        }
-    </script>
-@endpush
