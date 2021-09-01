@@ -24,3 +24,5 @@ Route::get('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
 Route::resource('/admin/student', 'StudentController')->middleware('auth');
 Route::post('/admin/student/search', ['as' => 'student.search', 'uses' => 'StudentController@search'])
     ->middleware('auth');
+Route::post('/admin/student/create', ['as' => 'student.create', 'uses' => 'StudentController@create'])
+    ->middleware('auth');

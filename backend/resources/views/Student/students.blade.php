@@ -41,7 +41,9 @@
         @endif
     </div>
     <div id="add">
-        <form>
+        <form action="{{route('student.create')}}" method="post">
+            @csrf
+            <input type="hidden" value="Add student" name="add">
             <button class="btn btn-outline-success" type="submit">Add Student</button>
         </form>
     </div>

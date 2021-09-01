@@ -8,6 +8,7 @@ use App\Models\Student;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SearchStudentRequest;
+use App\Http\Requests\StoreStudentRequest;
 
 class StudentController extends Controller
 {
@@ -37,9 +38,11 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $header = $request->add;
+        $admin = Auth::user()->username;
+        return view('Student.createform')->with('admin', $admin)->with('header', $header);
     }
 
     /**
@@ -48,9 +51,19 @@ class StudentController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        //
+        $validated = $request->only('search');
+        $students = Student::all();
+        $students->each(function ($item, $itemKey) use($validated, $students) {
+            if(strpos(strtoupper($item->name), strtoupper($validated['search'])) > -1) {
+                $this->extracted($item);
+            } else {
+                unset($students[$itemKey]);
+            }
+        });
+        $admin = Auth::user()->username;
+        return view('Student.students')->with('admin', $admin)->with('students', $students);
     }
 
     /**

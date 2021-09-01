@@ -1,0 +1,16 @@
+form {
+    box-sizing: border-box;
+    width: 500px;
+    margin: 30px auto 0;
+    box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+    padding-bottom: 40px;
+    padding: 2rem;
+    border-radius: 3px;
+}
+label {
+    padding-right: 1rem;
+    font-weight: bold;
+}
+#submit {
+    margin: 0 auto !important;
+}
