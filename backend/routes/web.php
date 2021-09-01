@@ -21,6 +21,6 @@ Route::get('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@ind
 Route::post('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@login']);
 Route::get('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
 
-Route::resource('/admin/student/manager', 'StudentController')->middleware('auth');
-Route::post('/admin/student/manager/search', ['as' => 'manager.search', 'uses' => 'StudentController@search'])
+Route::resource('/admin/student', 'StudentController')->middleware('auth');
+Route::post('/admin/student/search', ['as' => 'student.search', 'uses' => 'StudentController@search'])
     ->middleware('auth');

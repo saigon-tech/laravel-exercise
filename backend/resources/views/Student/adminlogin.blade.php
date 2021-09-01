@@ -17,7 +17,7 @@
 @endsection
 
 @section('content')
-    <form action="{{route('manager.index')}}" method="post">
+    <form action="{{route('admin.login')}}" method="post">
         @csrf
         <div>
             <h1>Login</h1>

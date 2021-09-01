@@ -26,7 +26,7 @@ class AdminRequest extends FormRequest
     {
         return [
             'username' => 'required|min:6|bail',
-            'password' => 'required',
+            'password' => 'required|bail',
         ];
     }
     public function messages()
@@ -34,7 +34,7 @@ class AdminRequest extends FormRequest
         return [
             'username.required' => 'Username không được trống!',
             'password.required' => 'Password không được trống!',
-            'username.min' => 'Password không được ít hơn 6 ký tự!',
+            'username.min' => 'Username không được ít hơn 6 ký tự!',
         ];
     }
 }

@@ -27,16 +27,18 @@
 
 @section('content')
     <div id="searchdiv">
-        <form class="d-flex" action="{{route('manager.search')}}" method="post" style="position:relative;">
+        <form class="d-flex" action="{{route('student.search')}}" method="post" style="position:relative;">
             @csrf
             <input id="search" class="form-control me-2" name="search" placeholder="Search" aria-label="Search" type="text">
             <button id="get-start" type="submit" class="btn btn-info">Search</button>
         </form>
-        <ul class="alert text-danger" style="margin-left: 1.5rem; position: absolute;">
-            @foreach($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
+        @if($errors->any())
+            <ul class="alert text-danger" style="margin-left: 1.5rem; position: absolute;">
+                @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                @endforeach
+            </ul>
+        @endif
     </div>
     <div id="add">
         <form>
