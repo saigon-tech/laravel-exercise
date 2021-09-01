@@ -17,10 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/adminLogin', ['as' => 'adminLogin', 'uses' =>'AdminController@index'])->middleware('guest');
-Route::post('/adminLogin', ['as' => 'adminLogin', 'uses' =>'AdminController@login']);
+Route::get('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@index'])->middleware('guest');
+Route::post('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@login']);
 Route::get('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
 
-Route::resource('/adminLogin/studentManager', 'StudentController')->middleware('auth');
-Route::post('/adminLogin/studentManager/search', ['as' => 'studentManager.search', 'uses' => 'StudentController@search'])
+Route::resource('/admin/student/manager', 'StudentController')->middleware('auth');
+Route::post('/admin/student/manager/search', ['as' => 'manager.search', 'uses' => 'StudentController@search'])
     ->middleware('auth');

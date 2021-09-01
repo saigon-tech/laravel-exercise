@@ -17,15 +17,10 @@
 @endsection
 
 @section('content')
-    <form method="post">
+    <form action="{{route('manager.index')}}" method="post">
         @csrf
         <div>
             <h1>Login</h1>
-            @if (session('msg'))
-                <div class="alert alert-danger">
-                    {{ session('msg') }}
-                </div>
-            @endif
         </div>
         <input name="username" placeholder="Username" type="text" required="">
         <input name="password" placeholder="Password" type="password" required="">

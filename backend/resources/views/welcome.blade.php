@@ -76,7 +76,7 @@
                 <div class="title m-b-md">
                     Laravel Exercise
                 </div>
-                <form action="/adminLogin" method="get">
+                <form action="{{route('admin.login')}}" method="get">
                     <button id="get-start" type="submit" class="btn btn-info">LOGIN</button>
                 </form>
             </div>

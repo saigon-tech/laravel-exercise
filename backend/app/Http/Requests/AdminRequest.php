@@ -25,8 +25,8 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|max:20',
-            'password' => 'required|max:255|min:5',
+            'username' => 'required|min:6|bail',
+            'password' => 'required',
         ];
     }
     public function messages()
@@ -34,9 +34,7 @@ class AdminRequest extends FormRequest
         return [
             'username.required' => 'Username không được trống!',
             'password.required' => 'Password không được trống!',
-            'username.max' => 'Username không được quá 20 ký tự!',
-            'password.max' => 'Password không được quá 255 ký tự!',
-            'password.min' => 'Password không được ít hơn 5 ký tự!',
+            'username.min' => 'Password không được ít hơn 6 ký tự!',
         ];
     }
 }
