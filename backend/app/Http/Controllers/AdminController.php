@@ -8,14 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
-    public function index(Request  $request) {
+    public function index() {
         return view('Student.adminlogin');
     }
 
     public function login(Request $request) {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|max:20',
-            'password' => 'required|max:255|min:5',
+            'username' => 'required|min:6|bail',
+            'password' => 'required',
         ]);
 
         if ($validator->fails()) {
