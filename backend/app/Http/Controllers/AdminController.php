@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function login(AdminRequest $request) {
         $validated = $request->only('username', 'password');
         if (Auth::attempt($validated)) {
-            return redirect('/adminLogin/studentManager');
+            return redirect('/admin/student');
         } else {
             return redirect()->back()->withErrors('Sai tên tài khoản hoặc mật khẩu!')->withInput();
         }
