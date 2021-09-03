@@ -27,5 +27,11 @@ nav {
 .page-link {
     color: #198754;
 }
+thead a {
+    text-decoration: none;
+}
+thead a:hover {
+    color: #0d6efd;
+}
 
 

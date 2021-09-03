@@ -25,13 +25,13 @@ class SearchStudentRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'required|max:255',
+
         ];
     }
     public function messages()
     {
         return [
-            'search.required' => 'Phải nhập dữ liệu trước khi tìm kiếm!',
+
         ];
     }
 }

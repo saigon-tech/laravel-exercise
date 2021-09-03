@@ -29,12 +29,4 @@ class AdminRequest extends FormRequest
             'password' => 'required|bail',
         ];
     }
-    public function messages()
-    {
-        return [
-            'username.required' => 'Username không được trống!',
-            'password.required' => 'Password không được trống!',
-            'username.min' => 'Username không được ít hơn 6 ký tự!',
-        ];
-    }
 }

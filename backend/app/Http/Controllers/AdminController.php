@@ -16,7 +16,7 @@ class AdminController extends Controller
     public function login(AdminRequest $request) {
         $validated = $request->only('username', 'password');
         if (Auth::attempt($validated)) {
-            return redirect('/admin/student');
+            return redirect()->route('student.index');
         } else {
             return redirect()->back()->withErrors('Sai tên tài khoản hoặc mật khẩu!')->withInput();
         }
@@ -29,6 +29,6 @@ class AdminController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('welcome');
     }
 }
