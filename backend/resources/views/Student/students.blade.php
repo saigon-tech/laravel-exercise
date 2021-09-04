@@ -12,7 +12,7 @@
 
 @section('sidebar')
     <div class="top-left links">
-        <a href="/">HOME</a>
+        <a href="{{route('student.index')}}">HOME</a>
     </div>
     <div class="top-right links">
         <a>User:
@@ -35,11 +35,9 @@
         </form>
     </div>
     <div id="add">
-        <form action="{{route('student.create')}}" method="post">
-            @csrf
-            <input type="hidden" value="Add student" name="add">
-            <button class="btn btn-outline-success" type="submit">Add Student</button>
-        </form>
+        <button id="btnAdd" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#Modal">
+            Add Student
+        </button>
     </div>
     <div id="list_student">
         <table id="table" class="table">
@@ -57,8 +55,9 @@
             </thead>
             <tbody>
             @if(isset($students))
+
                 @foreach($students as $student)
-                    <tr>
+                    <tr data-bs-toggle="modal" data-bs-target="#Modal">
                         <th scope="row">{{ $student->id }}</th>
                         <td>{{ $student->name }}</td>
                         <td>{{ $student->birthday }}</td>
@@ -80,4 +79,107 @@
     @if(isset($students))
         {{ $students->withQueryString()->links() }}
     @endif
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalLabel" style="font-weight: bold"></h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{route('student.store')}}" method="post" id="modalForm">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input id="name" name="name" class="form-control" type="text">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Birthdate</label>
+                            <input id="birthday" name="birthday" class="form-control" type="date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="math">Math</label>
+                            <select name="math" id="math" class="form-select" aria-label="math select">
+                                @for($i=1;$i<=10;$i++)
+                                    <option value="{{$i}}" selected? {{$i}}==1:>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="music">Music</label>
+                            <select name="music" id="music" class="form-select" aria-label="music select">
+                                @for($i=1;$i<=10;$i++)
+                                    <option value="{{$i}}" selected? {{$i}}==1:>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="english">English</label>
+                            <select name="english" id="english" class="form-select" aria-label="english select">
+                                @for($i=1;$i<=10;$i++)
+                                    <option value="{{$i}}" selected? {{$i}}==1:>{{$i}}</option>
+                                @endfor
+                            </select>
+                        </div>
+                        @if($errors->any())
+                            <ul class="alert text-danger" style="margin-left: 1.5rem;">
+                                @foreach($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+@push('js')
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#btnAdd").on("click", function(){
+                document.querySelector("#modalLabel").textContent = "Add student";
+                $('#modalForm')[0].reset();
+            });
+        });
+        $(document).ready(function(){
+            $("#table tbody tr").on("click", function(){
+                document.querySelector("#modalLabel").textContent = "Edit student";
+                let data = $(this).text().trim().split('\n').map(function(s) {
+                    return String.prototype.trim.apply(s);
+                });
+                let col = document.querySelector("thead tr").textContent.trim().split('\n').map(function(s) {
+                    return String.prototype.trim.apply(s).toLowerCase();
+                });
+                col.forEach(function(item, index, array) {
+                    switch (item) {
+                        case 'name':
+                            $(".modal-body #name").val(data[index]);
+                            break;
+                        case "birthday":
+                            $(".modal-body #birthday").val(data[index]);
+                            break;
+                        case "math":
+                            $(".modal-body #math").val(data[index]);
+                            break;
+                        case "music":
+                            $(".modal-body #music").val(data[index]);
+                            break;
+                        case "english":
+                            $(".modal-body #english").val(data[index]);
+                            break;
+                        default:
+                            break;
+                    };
+                });
+            });
+        });
+    </script>
+@endpush
