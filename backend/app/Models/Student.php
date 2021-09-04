@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    public $timestamps = false;
     protected $fillable = [
         'name',
         'birthday'
     ];
-//    public function admins() {
-//        return $this->belongsTo('App\Models\Admin');
-//    }
+    public function Grade() {
+        return $this->hasMany('App\Models\Grade', 'student_id', 'id');
+    }
 }

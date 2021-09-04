@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
+use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SearchStudentRequest;
@@ -66,17 +67,30 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        $validated = $request->only('search');
-        $students = Student::all();
-        $students->each(function ($item, $itemKey) use($validated, $students) {
-            if(strpos(strtoupper($item->name), strtoupper($validated['search'])) > -1) {
-                $this->extracted($item);
-            } else {
-                unset($students[$itemKey]);
-            }
-        });
-        $admin = Auth::user()->username;
-        return view('Student.students')->with('admin', $admin)->with('students', $students);
+        $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
+
+        $student = Student::create([
+            'name' => $validated['name'],
+            'birthday' => $validated['birthday'],
+        ]);
+
+        Grade::create([
+            'student_id' => $student['id'],
+            'subject' => 1,
+            'grade' => $validated['math'],
+        ]);
+        Grade::create([
+            'student_id' => $student['id'],
+            'subject' => 2,
+            'grade' => $validated['music'],
+        ]);
+        Grade::create([
+            'student_id' => $student['id'],
+            'subject' => 3,
+            'grade' => $validated['english'],
+        ]);
+
+        return redirect()->back()->with('msg', 'Student was added!');
     }
 
     /**

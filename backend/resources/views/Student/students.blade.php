@@ -39,6 +39,11 @@
             Add Student
         </button>
     </div>
+    @if(session('msg'))
+        <div class="alert alert-success">
+            {{session('msg')}}
+        </div>
+    @endif
     <div id="list_student">
         <table id="table" class="table">
             <thead>
@@ -135,7 +140,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary" form="modalForm">Save</button>
                 </div>
             </div>
         </div>
