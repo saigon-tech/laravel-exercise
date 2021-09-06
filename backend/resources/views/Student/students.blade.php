@@ -39,12 +39,7 @@
             Add Student
         </button>
     </div>
-    @if(session('msg'))
-        <div class="alert alert-success">
-            {{session('msg')}}
-        </div>
-    @endif
-    <div id="list_student">
+    <div id="list_student" style="position: relative">
         <table id="table" class="table">
             <thead>
             <tr>
@@ -60,7 +55,6 @@
             </thead>
             <tbody>
             @if(isset($students))
-
                 @foreach($students as $student)
                     <tr data-bs-toggle="modal" data-bs-target="#Modal">
                         <th scope="row">{{ $student->id }}</th>
@@ -74,8 +68,13 @@
                     </tr>
                 @endforeach
             @else
-                <div id="mess" class="alert alert-danger">
+                <div id="mess" class="alert alert-danger" style="text-align: center;">
                     No data!
+                </div>
+            @endif
+            @if(session('msg'))
+                <div id="msg" class="alert alert-success" style="text-align: center; position: absolute; width: 100%">
+                    {{session('msg')}}
                 </div>
             @endif
             </tbody>
@@ -92,54 +91,53 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="modalLabel" style="font-weight: bold"></h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button id="close" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{route('student.store')}}" method="post" id="modalForm">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Name</label>
+                            @error('name')<span style="color: red;">• {{$message}}</span><br/>@enderror
+                            <label for="name" class="form-label" >Name</label>
                             <input id="name" name="name" class="form-control" type="text">
                         </div>
                         <div class="mb-3">
+                            @error('birthday')<span style="color: red;">• {{$message}}</span><br/>@enderror
                             <label for="exampleInputPassword1" class="form-label">Birthdate</label>
                             <input id="birthday" name="birthday" class="form-control" type="date">
                         </div>
                         <div class="mb-3">
+                            @error('math')<span style="color: red;">• {{$message}}</span><br/>@enderror
                             <label class="form-label" for="math">Math</label>
                             <select name="math" id="math" class="form-select" aria-label="math select">
                                 @for($i=1;$i<=10;$i++)
-                                    <option value="{{$i}}" selected? {{$i}}==1:>{{$i}}</option>
+                                    <option value="{{$i}}">{{$i}}</option>
                                 @endfor
                             </select>
                         </div>
                         <div class="mb-3">
+                            @error('music')<span style="color: red;">• {{$message}}</span><br/>@enderror
                             <label class="form-label" for="music">Music</label>
                             <select name="music" id="music" class="form-select" aria-label="music select">
                                 @for($i=1;$i<=10;$i++)
-                                    <option value="{{$i}}" selected? {{$i}}==1:>{{$i}}</option>
+                                    <option value="{{$i}}">{{$i}}</option>
                                 @endfor
                             </select>
                         </div>
                         <div class="mb-3">
+                            @error('english')<span style="color: red;">• {{$message}}</span><br/>@enderror
                             <label class="form-label" for="english">English</label>
                             <select name="english" id="english" class="form-select" aria-label="english select">
                                 @for($i=1;$i<=10;$i++)
-                                    <option value="{{$i}}" selected? {{$i}}==1:>{{$i}}</option>
+                                    <option value="{{$i}}">{{$i}}</option>
                                 @endfor
                             </select>
                         </div>
-                        @if($errors->any())
-                            <ul class="alert text-danger" style="margin-left: 1.5rem;">
-                                @foreach($errors->all() as $error)
-                                    <li>{{$error}}</li>
-                                @endforeach
-                            </ul>
-                        @endif
+{{--                        {{ method_field('PUT') }}--}}
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary" form="modalForm">Save</button>
                 </div>
             </div>
@@ -148,21 +146,35 @@
 @endsection
 @push('js')
     <script type="text/javascript">
+        @if($errors->any())
+            $(window).on('load', function() {
+                $('#Modal').modal('show');
+                document.querySelector("#modalLabel").textContent = "Add student";
+            });
+        @endif
         $(document).ready(function(){
             $("#btnAdd").on("click", function(){
                 document.querySelector("#modalLabel").textContent = "Add student";
                 $('#modalForm')[0].reset();
+                document.querySelector('#modalForm').setAttribute('action', "{{route('student.store')}}");
+                document.querySelector("#method").remove();
             });
-        });
-        $(document).ready(function(){
             $("#table tbody tr").on("click", function(){
                 document.querySelector("#modalLabel").textContent = "Edit student";
-                let data = $(this).text().trim().split('\n').map(function(s) {
+                if($('#method').length){}
+                else
+                    $("#modalForm").append("<input type='hidden' name='_method' value='PUT' id='method'>");
+
+                const data = $(this).text().trim().split('\n').map(function(s) {
                     return String.prototype.trim.apply(s);
                 });
-                let col = document.querySelector("thead tr").textContent.trim().split('\n').map(function(s) {
+                const col = document.querySelector("thead tr").textContent.trim().split('\n').map(function(s) {
                     return String.prototype.trim.apply(s).toLowerCase();
                 });
+                const id = data[col.indexOf('id')];
+                const url = "{{route('student.update')}}"+"?id="+id;
+                {{--document.querySelector('#modalForm').setAttribute('action', "{{route('student.update', ['id'=>  `${id}`])}}");--}}
+                document.querySelector('#modalForm').setAttribute('action', url);
                 col.forEach(function(item, index, array) {
                     switch (item) {
                         case 'name':
@@ -184,6 +196,11 @@
                             break;
                     };
                 });
+            });
+        });
+        $(function(){
+            $(document).click(function(){
+                $('#msg').hide();
             });
         });
     </script>

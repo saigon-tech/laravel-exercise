@@ -54,9 +54,7 @@ class StudentController extends Controller
      */
     public function create(Request $request)
     {
-        $header = $request->add;
-        $admin = Auth::user()->username;
-        return view('Student.createform')->with('admin', $admin)->with('header', $header);
+
     }
 
     /**
@@ -122,9 +120,30 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreStudentRequest $request)
     {
-        //
+        $id = $request->query('id');
+        $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
+
+        $student = Student::find($id);
+        $student = Student::where('id',$id)->first();
+        $student->name = $validated['name'];
+        $student->birthday = $validated['birthday'];
+        if($student->save()) {
+            $grade = Grade::find($id);
+            $grade = Grade::where('student_id', $id)->where('subject', 1)->firstOrFail();
+            $grade->grade = $validated['math'];
+            $grade->save();
+            $grade = Grade::where('student_id', $id)->where('subject', 2)->firstOrFail();
+            $grade->grade = $validated['music'];
+            $grade->save();
+            $grade = Grade::where('student_id', $id)->where('subject', 3)->firstOrFail();
+            $grade->grade = $validated['english'];
+            $grade->save();
+            return redirect()->back()->with('msg', 'Student was updated!');
+        } else {
+            return redirect()->back()->with('msg', 'Student was not update!');
+        }
     }
 
     /**
@@ -138,7 +157,7 @@ class StudentController extends Controller
         //
     }
 
-    public function search(SearchStudentRequest $request)
+    public function search(Request $request)
     {
         $search = $request->query('search');
         $sort = $request->query('col');

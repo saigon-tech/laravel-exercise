@@ -25,8 +25,8 @@ class AdminRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => 'required|min:6|bail',
-            'password' => 'required|bail',
+            'username' => 'bail|required|min:6',
+            'password' => 'bail|required',
         ];
     }
 }

@@ -28,13 +28,13 @@ class StoreStudentRequest extends FormRequest
         $before_date = '2015-01-01';
         $after_date = '1990-01-01';
         return [
-            'name' => 'required|bail',
-            'birthday' => 'required|date|before:'
+            'name' => 'bail|required|bail',
+            'birthday' => 'bail|required|date|before:'
                 . $before_date . '|after:'
-                . $after_date . '|bail',
-            'math' => 'required|integer|between:1,10|bail',
-            'music' => 'required|integer|between:1,10|bail',
-            'english' => 'required|integer|between:1,10|bail',
+                . $after_date,
+            'math' => 'bail|required|integer|between:1,10',
+            'music' => 'bail|required|integer|between:1,10',
+            'english' => 'bail|required|integer|between:1,10',
         ];
     }
 }
