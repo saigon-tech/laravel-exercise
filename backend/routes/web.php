@@ -17,7 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 Route::get('/admin/login', ['as' => 'admin.login.index', 'uses' =>'AdminController@index'])->middleware('guest');
-Route::post('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@login']);
+Route::post('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@login'])->middleware("throttle:10,2");;
 Route::get('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
 Route::get('/admin/student/search', 'StudentController@search')->name('student.search')
     ->middleware('auth');

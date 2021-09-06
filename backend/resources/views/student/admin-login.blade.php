@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/adminlogin.css') }}">
 
 @endpush
-@extends('Layout.layout')
+@extends('layout.layout')
 
 @section('title', 'Admin login')
 
@@ -19,7 +19,7 @@
         <div>
             <h1>Login</h1>
         </div>
-        <input name="username" placeholder="Username" type="text">
+        <input name="username" placeholder="Username" type="text" value="{{old('username')}}">
         <input name="password" placeholder="Password" type="password">
         <button name="submit" type="submit">LOGIN</button>
         <ul class="alert text-danger" style="margin-left: 1.5rem;">

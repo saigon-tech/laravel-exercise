@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/createform.css') }}">
 
 @endpush
-@extends('Layout.layout')
+@extends('layout.layout')
 
 @section('title', 'Admin login')
 

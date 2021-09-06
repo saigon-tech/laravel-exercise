@@ -12,7 +12,7 @@ class Grade extends Model
         'subject',
         'grade',
     ];
-    public function Student() {
-        return $this->belongsTo('App\Models\Student', 'student_id', 'id');
+    public function student() {
+        return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 }

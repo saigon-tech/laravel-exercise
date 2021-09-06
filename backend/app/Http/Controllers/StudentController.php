@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 class StudentController extends Controller
 {
+    /**
+     * @param $student
+     * @param $subject
+     * @return mixed
+     */
     public function getScore($student, $subject)
     {
         $score = DB::table('students')
@@ -26,6 +31,10 @@ class StudentController extends Controller
         return $score[0]->grade;
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $validated = $request->query('col');
@@ -42,7 +51,7 @@ class StudentController extends Controller
         $students = $this->getStudents($students);
         $admin = Auth::user()->username;
         $path = Route::currentRouteName();
-        return view('Student.students')->with('admin', $admin)
+        return view('student.student')->with('admin', $admin)
             ->with('students', $students)
             ->with('path', $path);
     }
@@ -157,6 +166,10 @@ class StudentController extends Controller
         //
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function search(Request $request)
     {
         $search = $request->query('search');
@@ -181,7 +194,7 @@ class StudentController extends Controller
         }
         $admin = Auth::user()->username;
         $path = Route::currentRouteName();
-        return view('Student.students')->with('admin', $admin)
+        return view('student.student')->with('admin', $admin)
             ->with('students', $students)
             ->with('path', $path)
             ->with('search', $search);

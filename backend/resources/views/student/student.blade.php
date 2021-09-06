@@ -1,5 +1,5 @@
 <!-- Stored in resources/views/child.blade.php -->
-@extends('Layout.layout')
+@extends('layout.layout')
 
 @push('styles')
 

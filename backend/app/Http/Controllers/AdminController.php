@@ -3,24 +3,51 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AdminRequest;
 
+/**
+ *
+ */
 class AdminController extends Controller
 {
-    public function index(Request  $request) {
-        return view('Student.adminlogin');
+    use AuthenticatesUsers;
+    protected $maxAttempts = 5;
+    protected $decayMinutes = 1;
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index(Request $request) {
+        return view('student.admin-login');
     }
 
+    /**
+     * @param AdminRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function login(AdminRequest $request) {
-        $validated = $request->only('username', 'password');
+        $validated = $request->validated();
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+            return $this->sendLockoutResponse($request);
+        }
         if (Auth::attempt($validated)) {
+            $this->clearLoginAttempts($request);
             return redirect()->route('student.index');
         } else {
-            return redirect()->back()->withErrors('Sai tên tài khoản hoặc mật khẩu!')->withInput();
+            $this->incrementLoginAttempts($request);
+            return $this->sendFailedLoginResponse($request);
         }
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout(Request $request)
     {
         Auth::logout();
