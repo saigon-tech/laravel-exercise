@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Carbon\Carbon;
 use App\Models\Student;
-use \App\Models\Grade;
+use App\Models\Grade;
 
 class StudentsSeeder extends Seeder
 {

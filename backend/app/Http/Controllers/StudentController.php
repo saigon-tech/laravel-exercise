@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Grade;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\SearchStudentRequest;
 use App\Http\Requests\StoreStudentRequest;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Route;
+use Illuminate\View\View;
 
 
 class StudentController extends Controller
@@ -33,7 +36,7 @@ class StudentController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function index(Request $request)
     {
@@ -59,7 +62,7 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
     public function create()
     {
@@ -70,10 +73,10 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param StoreStudentRequest $request
+     * @return RedirectResponse
      */
-    public function store(StoreStudentRequest $request)
+    public function store(StoreStudentRequest $request): RedirectResponse
     {
         $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
 
@@ -105,9 +108,9 @@ class StudentController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function show($id)
+    public function show(int $id)
     {
     }
 
@@ -115,9 +118,9 @@ class StudentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $student = Student::where('id', '=', $id)->firstorfail();
         $this->extracted($student);
@@ -130,11 +133,11 @@ class StudentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param StoreStudentRequest $request
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(StoreStudentRequest $request, $id)
+    public function update(StoreStudentRequest $request, int $id): RedirectResponse
     {
         $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
 
@@ -162,16 +165,16 @@ class StudentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         //
     }
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function search(Request $request)
     {

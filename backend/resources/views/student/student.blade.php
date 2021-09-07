@@ -45,10 +45,12 @@
             <tr>
                 <th scope="col"><a href="{{route($path, ['col' => 'id', 'search' => $search??''])}}">ID</a></th>
                 <th scope="col"><a href="{{route($path, ['col' => 'name', 'search' => $search??''])}}">Name</a></th>
-                <th scope="col"><a href="{{route($path, ['col' => 'birthday', 'search' => $search??''])}}">Birthday</a></th>
+                <th scope="col"><a href="{{route($path, ['col' => 'birthday', 'search' => $search??''])}}">Birthday</a>
+                </th>
                 <th scope="col"><a href="{{route($path, ['col' => 'math', 'search' => $search??''])}}">Math</a></th>
                 <th scope="col"><a href="{{route($path, ['col' => 'music', 'search' => $search??''])}}">Music</a></th>
-                <th scope="col"><a href="{{route($path, ['col' => 'english', 'search' => $search??''])}}">English</a></th>
+                <th scope="col"><a href="{{route($path, ['col' => 'english', 'search' => $search??''])}}">English</a>
+                </th>
                 <th scope="col"><a href="{{route($path, ['col' => 'gpa', 'search' => $search??''])}}">GPA</a></th>
                 <th scope="col"><a href="{{route($path, ['col' => 'pass', 'search' => $search??''])}}">Pass</a></th>
                 <th></th>

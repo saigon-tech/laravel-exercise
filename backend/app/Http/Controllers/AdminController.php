@@ -2,38 +2,50 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AdminRequest;
+use Illuminate\Validation\ValidationException;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
- *
+ * Class AdminController
  */
 class AdminController extends Controller
 {
     use AuthenticatesUsers;
+
     protected $maxAttempts = 5;
     protected $decayMinutes = 1;
 
     /**
-     * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
-    public function index() {
+    public function index()
+    {
         return view('student.admin-login');
     }
 
     /**
      * @param AdminRequest $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse|Response|void
+     * @throws ValidationException
      */
-    public function login(AdminRequest $request) {
+    public function login(AdminRequest $request)
+    {
         $validated = $request->validated();
 
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
-            return $this->sendLockoutResponse($request);
+            try {
+                return $this->sendLockoutResponse($request);
+            } catch (ValidationException $e) {
+            }
         }
         if (Auth::attempt($validated)) {
             $this->clearLoginAttempts($request);
@@ -46,9 +58,9 @@ class AdminController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    public function logout(Request $request)
+    public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
 
