@@ -20,7 +20,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(Request $request) {
+    public function index() {
         return view('student.admin-login');
     }
 
@@ -56,6 +56,6 @@ class AdminController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('welcome');
+        return redirect()->route('login.index');
     }
 }

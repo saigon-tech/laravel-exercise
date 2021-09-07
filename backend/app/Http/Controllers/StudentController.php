@@ -27,8 +27,8 @@ class StudentController extends Controller
             ->select('grades.subject', 'grades.grade')
             ->where('grades.student_id', '=', $student->id)
             ->where('grades.subject', '=', $subject)
-            ->get();
-        return $score[0]->grade;
+            ->first();
+        return $score->grade;
     }
 
     /**
@@ -61,9 +61,10 @@ class StudentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-
+        $admin = Auth::user()->username;
+        return view('student.create-form')->with('admin', $admin);
     }
 
     /**
@@ -97,7 +98,7 @@ class StudentController extends Controller
             'grade' => $validated['english'],
         ]);
 
-        return redirect()->back()->with('msg', 'Student was added!');
+        return redirect()->route('student.index')->with('msg', 'Student was added!');
     }
 
     /**
@@ -108,7 +109,6 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
@@ -119,7 +119,12 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $student = Student::where('id', '=', $id)->firstorfail();
+        $this->extracted($student);
+        $admin = Auth::user()->username;
+        return view('student.edit-form')
+            ->with('admin', $admin)
+            ->with('student', $student);
     }
 
     /**
@@ -129,12 +134,10 @@ class StudentController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreStudentRequest $request)
+    public function update(StoreStudentRequest $request, $id)
     {
-        $id = $request->query('id');
         $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
 
-        $student = Student::find($id);
         $student = Student::where('id',$id)->first();
         $student->name = $validated['name'];
         $student->birthday = $validated['birthday'];
@@ -149,9 +152,9 @@ class StudentController extends Controller
             $grade = Grade::where('student_id', $id)->where('subject', 3)->firstOrFail();
             $grade->grade = $validated['english'];
             $grade->save();
-            return redirect()->back()->with('msg', 'Student was updated!');
+            return redirect()->route('student.index')->with('msg', 'Student was updated!');
         } else {
-            return redirect()->back()->with('msg', 'Student was not update!');
+            return redirect()->route('student.index')->with('msg', 'Student was not update!');
         }
     }
 

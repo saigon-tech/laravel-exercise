@@ -12,22 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
-Route::get('/admin/login', ['as' => 'admin.login.index', 'uses' =>'AdminController@index'])->middleware('guest');
-Route::post('/admin/login', ['as' => 'admin.login', 'uses' =>'AdminController@login'])->middleware("throttle:10,2");;
+    return redirect()->route('student.index');
+});
+Route::get('/login', ['as' => 'login.index', 'uses' =>'AdminController@index'])
+    ->middleware('guest');
+Route::post('/login', ['as' => 'login', 'uses' =>'AdminController@login'])
+    ->middleware("throttle:10,2");;
 Route::get('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
-Route::get('/admin/student/search', 'StudentController@search')->name('student.search')
-    ->middleware('auth');
 
-
-Route::get('/admin/student', ['as' => 'student.index', 'uses' => 'StudentController@index'])
+Route::get('student/search', ['as' => 'student.search', 'uses' => 'StudentController@search'])
     ->middleware('auth');
-Route::post('/admin/student', ['as' => 'student.store', 'uses' => 'StudentController@store'])
-    ->middleware('auth');
-Route::put('/admin/student', ['as' => 'student.update', 'uses' => 'StudentController@update'])
-    ->middleware('auth');
-//Route::resource('/admin/student', 'StudentController')->middleware('auth');
+Route::resource('/student', 'StudentController')->middleware('auth');
 
