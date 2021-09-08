@@ -12,16 +12,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', function () {
-    return redirect()->route('student.index');
-});
+Route::get('/', 'WelcomeController@index');
+
 Route::get('/login', ['as' => 'login.index', 'uses' =>'AdminController@index'])
     ->middleware('guest');
 Route::post('/login', ['as' => 'login', 'uses' =>'AdminController@login'])
     ->middleware("throttle:10,2");;
-Route::get('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
+Route::post('logout', ['as' => 'logout', 'uses' =>'AdminController@logout']);
 
-Route::get('student/search', ['as' => 'student.search', 'uses' => 'StudentController@search'])
-    ->middleware('auth');
 Route::resource('/student', 'StudentController')->middleware('auth');
 

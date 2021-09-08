@@ -54,7 +54,7 @@
             font-size: 84px;
         }
 
-        .links > a {
+        .links a {
             color: #636b6f;
             padding: 0 25px;
             font-size: 15px;
@@ -71,14 +71,12 @@
             margin-top: 5rem !important;
             display: flex;
             flex-flow: column wrap;
-            /*align-items: center !important;*/
         }
     </style>
     @stack('styles')
 </head>
 <body>
 @section('sidebar')
-    This is the master sidebar.
 @show
 <div class="container">
     @yield("content");
