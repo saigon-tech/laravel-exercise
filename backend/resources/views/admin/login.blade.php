@@ -2,12 +2,12 @@
 
 @push('styles')
 
-    <link rel="stylesheet" href="{{ asset('css/adminlogin.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin/login.css') }}">
 
 @endpush
 @extends('layout.layout')
 
-@section('title', 'Admin login')
+@section('title', __('login.title'))
 
 @section('content')
     <form action="{{route('login')}}" method="post">

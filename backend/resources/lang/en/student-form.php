@@ -2,9 +2,9 @@
 
 return [
     // resources/lang/en/student-form.php
-    'index-title' => 'Create Student',
+    'index-title' => 'Student Manager',
     'create-title' => 'Create Student',
-    'edit-title' => 'Create Student',
+    'edit-title' => 'Edit Student',
     'add' => 'ADD STUDENT',
     'add-btn' => 'Add Student',
     'edit-btn' => 'Edit',

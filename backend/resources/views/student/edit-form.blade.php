@@ -8,7 +8,7 @@
 @endpush
 @extends('layout.layout')
 
-@section('title', 'Admin login')
+@section('title', __('student-form.edit-title'))
 
 @section('sidebar')
     <div class="top-left links">

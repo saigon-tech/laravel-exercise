@@ -8,7 +8,7 @@
 @endpush
 @extends('layout.layout')
 
-@section('title', __('create-title'))
+@section('title', __('student-form.create-title'))
 
 @section('sidebar')
     <div class="top-left links">

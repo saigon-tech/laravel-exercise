@@ -2,6 +2,6 @@
 
 return [
     // resources/lang/en/login.php
-    'title' => 'Admin login.',
+    'title' => 'Admin login',
     'login' => 'LOGIN'
 ];
