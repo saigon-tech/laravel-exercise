@@ -11,7 +11,7 @@ return [
     'edit' => 'EDIT STUDENT',
     'id' => 'ID',
     'name' => 'Name',
-    'birthdate' => 'Birthdate',
+    'birthday' => 'Birthday',
     'math' => 'Math',
     'music' => 'Music',
     'english' => 'English',
