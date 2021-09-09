@@ -116,7 +116,7 @@ class StudentController extends Controller
     public function create()
     {
         $admin = Auth::user()->username;
-        return view('student.create-form')->with('admin', $admin);
+        return view('student.create')->with('admin', $admin);
     }
 
     /**
@@ -174,7 +174,7 @@ class StudentController extends Controller
         $student = Student::where('id', '=', $id)->firstorfail();
         $this->extracted($student);
         $admin = Auth::user()->username;
-        return view('student.edit-form')
+        return view('student.edit')
             ->with('admin', $admin)
             ->with('student', $student);
     }

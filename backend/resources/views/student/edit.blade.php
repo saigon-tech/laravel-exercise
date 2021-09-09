@@ -1,4 +1,4 @@
-<!-- Stored in resources/views/student/edit-form.blade.php -->
+<!-- Stored in resources/views/student/edit.blade.php -->
 
 
 @push('styles')
