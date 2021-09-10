@@ -76,7 +76,23 @@
     @stack('styles')
 </head>
 <body>
-@section('sidebar')
+@section('header')
+    <div id="header">
+    <div class="top-left links">
+        <a href="{{route('student.index')}}">{{__('header.home')}}</a>
+    </div>
+    <div class="top-right links">
+        <a style="float: left">{{__('header.user')}}
+            @if(!empty($admin))
+                {{$admin}}
+            @endif
+        </a>
+        <form action="{{route('logout')}}" method="post" id="logout" style="float: right">
+            @csrf
+            <a href="javascript:$('#logout').submit();">{{__('header.logout')}}</a>
+        </form>
+    </div>
+    </div>
 @show
 <div class="container">
     @yield("content");

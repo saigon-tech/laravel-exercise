@@ -23,18 +23,19 @@ class StoreRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
-        $before_date = '2015-01-01';
-        $after_date = '1990-01-01';
+        $minBirthday = config('student.minBirthDay');
+        $maxBirthday = config('student.maxBirthDay');
         return [
             'name' => 'bail|required|bail',
             'birthday' => 'bail|required|date|before:'
-                . $before_date . '|after:'
-                . $after_date,
-            'math' => 'bail|required|integer|between:1,10',
-            'music' => 'bail|required|integer|between:1,10',
-            'english' => 'bail|required|integer|between:1,10',
+                . $maxBirthday
+                . '|after:'
+                . $minBirthday,
+            'math' => 'bail|required|integer|between:0,10',
+            'music' => 'bail|required|integer|between:0,10',
+            'english' => 'bail|required|integer|between:0,10',
         ];
     }
 }

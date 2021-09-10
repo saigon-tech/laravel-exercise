@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Student::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName . ' ' . $faker->lastName,
+        'name' => substr($faker->firstName . ' ' . $faker->lastName,0, 20),
         'birthday' => $faker->dateTimeBetween('1990-01-01','2015-01-01')->format('Y-m-d'),
     ];
 });

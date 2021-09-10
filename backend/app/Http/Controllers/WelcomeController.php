@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\View\View as ViewAlias;
 
 /**
  * Class WelcomeController
@@ -11,10 +13,10 @@ use Illuminate\Http\RedirectResponse;
 class WelcomeController extends Controller
 {
     /**
-     * @return RedirectResponse
+     * @return Application|Factory|ViewAlias
      */
-    public function index(): RedirectResponse
+    public function index()
     {
-        return redirect()->route('student.index');
+        return view('welcome');
     }
 }

@@ -3,5 +3,7 @@
 return [
     // resources/lang/en/login.php
     'title' => 'Admin login',
-    'login' => 'LOGIN'
+    'login' => 'LOGIN',
+    'username' => 'Username',
+    'password' => 'Password',
 ];

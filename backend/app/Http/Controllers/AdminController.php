@@ -20,9 +20,6 @@ class AdminController extends Controller
 {
     use AuthenticatesUsers;
 
-    protected $maxAttempts = 5;
-    protected $decayMinutes = 1;
-
     /**
      * @return Application|Factory|View
      */
@@ -39,14 +36,7 @@ class AdminController extends Controller
     public function login(AdminRequest $request)
     {
         $validated = $request->validated();
-
-        if ($this->hasTooManyLoginAttempts($request)) {
-            $this->fireLockoutEvent($request);
-            try {
-                return $this->sendLockoutResponse($request);
-            } catch (ValidationException $e) {
-            }
-        }
+        
         if (Auth::attempt($validated)) {
             $this->clearLoginAttempts($request);
             return redirect()->route('student.index');
@@ -68,6 +58,6 @@ class AdminController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('login.index');
+        return redirect()->route('welcome');
     }
 }

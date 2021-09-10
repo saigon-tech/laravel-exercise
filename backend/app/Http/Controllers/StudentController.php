@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Facade\Ignition\Support\Packagist\Package;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -45,6 +44,7 @@ class StudentController extends Controller
     {
         $search = $request->query('search');
         $col = $request->query('col');
+        $order = $request->query('order');
 
         $students = Student::all();
         $students->each(function ($item, $itemKey) {
@@ -58,54 +58,31 @@ class StudentController extends Controller
                 }
             });
         }
+
         if(empty($col)!=true) {
-            $students = $students->sortBy($col)->toArray();
+            if($order=='down') {
+                $students = $students->sortBy($col)->toArray();
+                $status = 'down';
+            }
+            else {
+                $students = $students->sortByDesc($col)->toArray();
+                $status = 'up';
+            }
+
         } else {
             $students = $students->toArray();
+            $status = null;
         }
 
         $students = $this->getStudents($students); //convert to paginate
         $admin = Auth::user()->username;
-        return view('student.student')
+        return view('student.index')
             ->with('admin', $admin)
             ->with('students', $students)
             ->with('search', $search)
-            ->with('col', $col);
-    }
-
-
-    /**
-     * @param Request $request
-     * @return Application|Factory|View
-     */
-    public function search(Request $request)
-    {
-        $search = $request->query('search');
-        $sort = $request->query('col');
-        if ($search != '') {
-            $students = Student::all();
-            $students = ($students->each(function ($item, $itemKey) use ($search, $students) {
-                if (strpos(strtoupper($item->name), strtoupper($search)) > -1) {
-                    $this->extracted($item);
-                } else {
-                    unset($students[$itemKey]);
-                }
-            }));
-            if ($sort != '') {
-                $students = $students->sortBy($sort)->toArray();
-            } else {
-                $students = $students->toArray();
-            }
-            $students = $this->getStudents($students);
-        } else {
-            $students = [];
-        }
-        $admin = Auth::user()->username;
-        $path = Route::currentRouteName();
-        return view('student.student')->with('admin', $admin)
-            ->with('students', $students)
-            ->with('path', $path)
-            ->with('search', $search);
+            ->with('col', $col)
+            ->with('order', $order)
+            ->with('status', $status);
     }
 
     /**
@@ -229,12 +206,9 @@ class StudentController extends Controller
         $student->math = $this->getScore($student, 1);
         $student->music = $this->getScore($student, 2);
         $student->english = $this->getScore($student, 3);
-        $student->gpa = number_format(($student->math + $student->music + $student->english) / 3, 2);
-        if ($student->gpa > 5.0) {
-            $student->pass = 'Y';
-        } else {
-            $student->pass = 'N';
-        }
+        $score = number_format(($student->math + $student->music + $student->english) / 3, 1);
+        ($score >= 10.0)? $student->gpa = $score : $student->gpa = '0'.$score;
+        ($score > 5.0)? $student->pass = 'Y' : $student->pass = 'N';
     }
 
     /**
@@ -244,7 +218,7 @@ class StudentController extends Controller
     public function getStudents(array $students): LengthAwarePaginator
     {
         $currentPage = LengthAwarePaginator::resolveCurrentPage($pageName = 'page', $default = 1);
-        $perPage = 3;
+        $perPage = 10;
         $currentItems = array_slice($students, $perPage * ($currentPage - 1), $perPage);
         $students = (new LengthAwarePaginator($currentItems, count($students), $perPage, $currentPage))
             ->setPath(route(Route::currentRouteName()));
