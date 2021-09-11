@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'maxBirthDay' => '2015-01-01',
-    'minBirthDay' => '1990-01-01',
+    'max_birthday' => '2015-01-01',
+    'min_birthday' => '1990-01-01',
 ];

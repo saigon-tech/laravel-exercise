@@ -127,7 +127,7 @@ class StudentController extends Controller
             'grade' => $validated['english'],
         ]);
 
-        return redirect()->route('student.index')->with('msg', 'Student was added!');
+        return redirect()->route('student.index')->with('msg', __('student.message_add_success'));
     }
 
     /**
@@ -171,7 +171,6 @@ class StudentController extends Controller
         $student->name = $validated['name'];
         $student->birthday = $validated['birthday'];
         if ($student->save()) {
-            $grade = Grade::find($id);
             $grade = Grade::where('student_id', $id)->where('subject', 1)->firstOrFail();
             $grade->grade = $validated['math'];
             $grade->save();
@@ -181,9 +180,9 @@ class StudentController extends Controller
             $grade = Grade::where('student_id', $id)->where('subject', 3)->firstOrFail();
             $grade->grade = $validated['english'];
             $grade->save();
-            return redirect()->route('student.index')->with('msg', 'Student was updated!');
+            return redirect()->route('student.index')->with('msg', __('student.message_update_success'));
         } else {
-            return redirect()->route('student.index')->with('msg', 'Student was not update!');
+            return redirect()->route('student.index')->with('msg', __('student.message_update_fail'));
         }
     }
 
@@ -203,12 +202,13 @@ class StudentController extends Controller
      */
     public function extracted($student): void
     {
+//        $student->birthday = date('Y/m/d', strtotime($student->birthday));
+//        $student->birthday = date_format(date_create($student->birthday),'Y/m/d');
         $student->math = $this->getScore($student, 1);
         $student->music = $this->getScore($student, 2);
         $student->english = $this->getScore($student, 3);
-        $score = number_format(($student->math + $student->music + $student->english) / 3, 1);
-        ($score >= 10.0)? $student->gpa = $score : $student->gpa = '0'.$score;
-        ($score > 5.0)? $student->pass = 'Y' : $student->pass = 'N';
+        $student->gpa = number_format(($student->math + $student->music + $student->english) / 3, 1);
+        ($student->gpa > 5.0)? $student->pass = 'Y' : $student->pass = 'N';
     }
 
     /**

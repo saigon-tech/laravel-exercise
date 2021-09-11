@@ -7,10 +7,17 @@
     padding: 2rem;
     border-radius: 3px;
 }
+
 label {
     padding-right: 1rem;
     font-weight: bold;
 }
+
 #submit {
     margin: 0 auto !important;
+}
+
+#modalLabel {
+    font-weight: bold;
+    text-align: center;
 }

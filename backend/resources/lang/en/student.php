@@ -2,12 +2,12 @@
 
 return [
     // resources/lang/en/student.php
-    'index-title' => 'Student Manager',
-    'create-title' => 'Create Student',
-    'edit-title' => 'Edit Student',
+    'index_title' => 'Student Manager',
+    'create_title' => 'Create Student',
+    'edit_title' => 'Edit Student',
     'add' => 'ADD STUDENT',
-    'add-btn' => 'Add Student',
-    'edit-btn' => 'Edit',
+    'add_btn' => 'Add Student',
+    'edit_btn' => 'Edit',
     'edit' => 'EDIT STUDENT',
     'id' => 'ID',
     'name' => 'Name',
@@ -19,6 +19,11 @@ return [
     'pass' => 'Pass',
     'save' => 'Save',
     'search' => 'Search',
-    'alert-data' => 'No data!',
-    'keyword' => 'Key word'
+    'alert_data' => 'No data!',
+    'key_word' => 'Key word',
+    'message_add_fail' => 'Student was not added!',
+    'message_add_success' => 'Student was added!',
+    'message_update_fail' => 'Student was not updated!',
+    'message_update_success' => 'Student was updated!',
+
 ];

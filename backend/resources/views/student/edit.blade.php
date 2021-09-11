@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ asset('css/student/create.css') }}">
 @endpush
 @extends('layout.layout')
-@section('title', __('student.edit-title'))
+@section('title', __('student.edit_title'))
 @section('content')
     <form action="{{route('student.update', $student->id)}}" method="post" id="modalForm">
         @csrf

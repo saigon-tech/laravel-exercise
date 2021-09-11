@@ -3,12 +3,12 @@
     <link rel="stylesheet" href="{{ asset('css/student/create.css') }}">
 @endpush
 @extends('layout.layout')
-@section('title', __('student.create-title'))
+@section('title', __('student.create_title'))
 @section('content')
     <form action="{{route('student.store')}}" method="post" id="modalForm">
         @csrf
         <div class="mb-4">
-            <h4 class="modal-title" id="modalLabel" style="font-weight: bold; text-align: center">
+            <h4 class="modal-title" id="modalLabel">
                 {{__('student.add')}}
             </h4>
             <hr>

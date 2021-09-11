@@ -3,24 +3,22 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/student/index.css') }}">
 @endpush
-@section('title', __('student.index-title'))
+@section('title', __('student.index_title'))
 @section('content')
     <div id="search-box">
         <form class="d-flex" action="{{route('student.index')}}" method="get">
             @csrf
-            <input id="search" class="form-control me-2" name="search" placeholder="{{__('student.keyword')}}"
+            <input id="search" class="form-control me-2" name="search" placeholder="{{__('student.key_word')}}"
                    type="search" value="{{$search??''}}">
-            <input type="hidden" name="col" value="{{$col??''}}">
             <button type="submit" class="btn btn-info">{{__('student.search')}}</button>
         </form>
     </div>
     <div id="add">
-        <a href="{{route('student.create')}}" class="btn btn-outline-success" value="{{__('student.add-btn')}}"
-           type="submit">
-            Add student
+        <a href="{{route('student.create')}}" class="btn btn-outline-success">
+            {{__('student.add_btn')}}
         </a>
     </div>
-    <div id="list_student" style="position: relative">
+    <div id="list-student">
         <table id="table" class="table">
             <thead>
             <tr>
@@ -146,19 +144,19 @@
                         <td>{{ $student->pass }}</td>
                         <td>
                             <form action="{{route('student.edit', $student->id)}}" method="get">
-                                <input type="submit" class="btn btn-outline-success" value="{{__('student.edit-btn')}}"
+                                <input type="submit" class="btn btn-outline-success" value="{{__('student.edit_btn')}}"
                                        id="btnEdit">
                             </form>
                         </td>
                     </tr>
                 @endforeach
             @else
-                <div id="mess" class="alert alert-danger" style="text-align: center;">
-                    {{__('student.alert-data')}}
+                <div id="mess" class="alert alert-danger">
+                    {{__('student.alert_data')}}
                 </div>
             @endif
             @if(session('msg'))
-                <div id="msg" class="alert alert-success" style="text-align: center; position: absolute; width: 100%">
+                <div id="msg" class="alert alert-success">
                     {{session('msg')}}
                 </div>
             @endif

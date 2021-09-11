@@ -25,14 +25,11 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        $minBirthday = config('student.minBirthDay');
-        $maxBirthday = config('student.maxBirthDay');
+        $minBirthday = config('student.min_birthday');
+        $maxBirthday = config('student.max_birthday');
         return [
-            'name' => 'bail|required|bail',
-            'birthday' => 'bail|required|date|before:'
-                . $maxBirthday
-                . '|after:'
-                . $minBirthday,
+            'name' => 'bail|required',
+            'birthday' => 'bail|required|date|before:' . $maxBirthday . '|after:' . $minBirthday,
             'math' => 'bail|required|integer|between:0,10',
             'music' => 'bail|required|integer|between:0,10',
             'english' => 'bail|required|integer|between:0,10',
