@@ -42,16 +42,20 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
+        //Get query
         $search = $request->query('search');
         $col = $request->query('col');
         $order = $request->query('order');
 
+        //Get all students
         $students = Student::all();
         $students->each(function ($item, $itemKey) {
+            //Add score column each subject
             $this->extracted($item);
         });
 
-        if(empty($search)!=true){
+        //Search
+        if (empty($search) != true) {
             $students->each(function ($item, $itemKey) use ($search, $students) {
                 if (strpos(strtoupper($item->name), strtoupper($search)) <= -1) {
                     unset($students[$itemKey]);
@@ -59,22 +63,26 @@ class StudentController extends Controller
             });
         }
 
-        if(empty($col)!=true) {
-            if($order=='down') {
+        //Sort column
+        if (empty($col) != true) {
+            if ($order == 'down') {
                 $students = $students->sortBy($col)->toArray();
-                $status = 'down';
-            }
-            else {
+                $status = '8595';
+                $order = 'up';
+            } else {
                 $students = $students->sortByDesc($col)->toArray();
-                $status = 'up';
+                $status = '8593';
+                $order = 'down';
             }
-
         } else {
             $students = $students->toArray();
             $status = null;
+            $order = null;
         }
 
-        $students = $this->getStudents($students); //convert to paginate
+        //Convert an array to pagination
+        $students = $this->getStudents($students);
+
         $admin = Auth::user()->username;
         return view('student.index')
             ->with('admin', $admin)
@@ -104,30 +112,43 @@ class StudentController extends Controller
      */
     public function store(StoreRequest $request): RedirectResponse
     {
+        //Get query
         $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
 
-        $student = Student::create([
-            'name' => $validated['name'],
-            'birthday' => $validated['birthday'],
-        ]);
+        DB::beginTransaction();
+        //Create student and grade
+        try {
+            $student = Student::create([
+                'name' => $validated['name'],
+                'birthday' => $validated['birthday'],
+            ]);
 
-        Grade::create([
-            'student_id' => $student['id'],
-            'subject' => 1,
-            'grade' => $validated['math'],
-        ]);
-        Grade::create([
-            'student_id' => $student['id'],
-            'subject' => 2,
-            'grade' => $validated['music'],
-        ]);
-        Grade::create([
-            'student_id' => $student['id'],
-            'subject' => 3,
-            'grade' => $validated['english'],
-        ]);
-
-        return redirect()->route('student.index')->with('msg', __('student.message_add_success'));
+            $gradeSubject1 = Grade::create([
+                'student_id' => $student['id'],
+                'subject' => 1,
+                'grade' => $validated['math'],
+            ]);
+            $gradeSubject2 = Grade::create([
+                'student_id' => $student['id'],
+                'subject' => 2,
+                'grade' => $validated['music'],
+            ]);
+            $gradeSubject3 = Grade::create([
+                'student_id' => $student['id'],
+                'subject' => 3,
+                'grade' => $validated['english'],
+            ]);
+            if ($student and $gradeSubject1 and $gradeSubject2 and $gradeSubject3) {
+                DB::commit();
+                return redirect()->route('student.index')->with('msg', __('student.message_add_success'));
+            } else {
+                DB::rollBack();
+                return redirect()->route('student.index')->with('msg', __('student.message_add_fail'));
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->route('student.index')->with('msg', __('student.message_add_fail'));
+        }
     }
 
     /**
@@ -149,7 +170,10 @@ class StudentController extends Controller
     public function edit(int $id)
     {
         $student = Student::where('id', '=', $id)->firstorfail();
+
+        //Add score column each subject
         $this->extracted($student);
+
         $admin = Auth::user()->username;
         return view('student.edit')
             ->with('admin', $admin)
@@ -166,22 +190,29 @@ class StudentController extends Controller
     public function update(StoreRequest $request, int $id): RedirectResponse
     {
         $validated = $request->only('name', 'birthday', 'math', 'music', 'english');
-
-        $student = Student::where('id', $id)->first();
-        $student->name = $validated['name'];
-        $student->birthday = $validated['birthday'];
-        if ($student->save()) {
-            $grade = Grade::where('student_id', $id)->where('subject', 1)->firstOrFail();
-            $grade->grade = $validated['math'];
-            $grade->save();
-            $grade = Grade::where('student_id', $id)->where('subject', 2)->firstOrFail();
-            $grade->grade = $validated['music'];
-            $grade->save();
-            $grade = Grade::where('student_id', $id)->where('subject', 3)->firstOrFail();
-            $grade->grade = $validated['english'];
-            $grade->save();
-            return redirect()->route('student.index')->with('msg', __('student.message_update_success'));
-        } else {
+        DB::beginTransaction();
+        try {
+            $student = Student::where('id', $id)->first();
+            $student->name = $validated['name'];
+            $student->birthday = $validated['birthday'];
+            if ($student->save()) {
+                $grade = Grade::where('student_id', $id)->where('subject', 1)->firstOrFail();
+                $grade->grade = $validated['math'];
+                $grade->save();
+                $grade = Grade::where('student_id', $id)->where('subject', 2)->firstOrFail();
+                $grade->grade = $validated['music'];
+                $grade->save();
+                $grade = Grade::where('student_id', $id)->where('subject', 3)->firstOrFail();
+                $grade->grade = $validated['english'];
+                $grade->save();
+                DB::commit();
+                return redirect()->route('student.index')->with('msg', __('student.message_update_success'));
+            } else {
+                DB::rollBack();
+                return redirect()->route('student.index')->with('msg', __('student.message_update_fail'));
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
             return redirect()->route('student.index')->with('msg', __('student.message_update_fail'));
         }
     }
@@ -202,13 +233,11 @@ class StudentController extends Controller
      */
     public function extracted($student): void
     {
-//        $student->birthday = date('Y/m/d', strtotime($student->birthday));
-//        $student->birthday = date_format(date_create($student->birthday),'Y/m/d');
         $student->math = $this->getScore($student, 1);
         $student->music = $this->getScore($student, 2);
         $student->english = $this->getScore($student, 3);
         $student->gpa = number_format(($student->math + $student->music + $student->english) / 3, 1);
-        ($student->gpa > 5.0)? $student->pass = 'Y' : $student->pass = 'N';
+        ($student->gpa > 5.0) ? $student->pass = 'Y' : $student->pass = 'N';
     }
 
     /**

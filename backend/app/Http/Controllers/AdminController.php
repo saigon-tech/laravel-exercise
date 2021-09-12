@@ -36,7 +36,7 @@ class AdminController extends Controller
     public function login(AdminRequest $request)
     {
         $validated = $request->validated();
-        
+
         if (Auth::attempt($validated)) {
             $this->clearLoginAttempts($request);
             return redirect()->route('student.index');
@@ -53,11 +53,8 @@ class AdminController extends Controller
     public function logout(Request $request): RedirectResponse
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect()->route('welcome');
     }
 }

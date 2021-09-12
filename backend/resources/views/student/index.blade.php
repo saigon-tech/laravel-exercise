@@ -22,109 +22,52 @@
         <table id="table" class="table">
             <thead>
             <tr>
-                @if(empty($order))
-                    @php($order = 'down')
-                @else
-                    @if($order == 'up')
-                        @php($order = 'down')
-                    @else
-                        @php($order = 'up')
-                    @endif
-                @endif
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'id', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'id', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.id')}}
-                        @if(empty($status)!=true and $col =='id')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='id')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'name', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'name', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.name')}}
-                        @if(empty($status)!=true and $col =='name')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='name')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'birthday', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'birthday', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.birthday')}}
-                        @if(empty($status)!=true and $col =='birthday')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='birthday')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'math', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'math', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.math')}}
-                        @if(empty($status)!=true and $col =='math')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='math')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'music', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'music', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.music')}}
-                        @if(empty($status)!=true and $col =='music')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='music')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'english', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'english', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.english')}}
-                        @if(empty($status)!=true and $col =='english')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='english')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'gpa', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'gpa', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.gpa')}}
-                        @if(empty($status)!=true and $col =='gpa')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='gpa')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'pass', 'search' => $search??'', 'order' => $order??''])}}">
+                    <a href="{{route('student.index', ['col' => 'pass', 'search' => $search??'', 'order' => $order??'down'])}}">
                         {{__('student.pass')}}
-                        @if(empty($status)!=true and $col =='pass')
-                            @if($status=='up')
-                                &#8593;
-                            @else
-                                &#8595;
-                            @endif
-                        @endif
+                        @if($col=='pass')&#{{$status}};@endif
                     </a>
                 </th>
                 <th></th>
@@ -136,7 +79,7 @@
                     <tr>
                         <th scope="row">{{ $student->id }}</th>
                         <td>{{ $student->name }}</td>
-                        <td>{{ $student->birthday }}</td>
+                        <td>{{ date_format(date_create($student->birthday),'Y/m/d') }}</td>
                         <td>{{ $student->math }}</td>
                         <td>{{ $student->music }}</td>
                         <td>{{ $student->english }}</td>

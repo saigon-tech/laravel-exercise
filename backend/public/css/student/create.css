@@ -21,3 +21,7 @@ label {
     font-weight: bold;
     text-align: center;
 }
+
+span {
+    color: red !important;
+}

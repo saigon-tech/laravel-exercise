@@ -4,77 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel Exercise - @yield('title')</title>
+    <title>@lang('header.title') - @yield('title')</title>
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- Styles -->
-    <style>
-        html, body {
-            background-color: #fff;
-            color: #636b6f;
-            font-family: 'Nunito', sans-serif;
-            font-weight: 200;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .full-height {
-            height: 100vh;
-        }
-
-        .flex-center {
-            align-items: center;
-            display: flex;
-            justify-content: center;
-        }
-
-        .position-ref {
-            position: relative;
-        }
-
-        .top-right {
-            position: absolute;
-            right: 10px;
-            top: 18px;
-        }
-
-        .top-left {
-            position: absolute;
-            left: 10px;
-            top: 18px;
-        }
-
-        .content {
-            text-align: center;
-        }
-
-        .title {
-            font-size: 84px;
-        }
-
-        .links a {
-            color: #636b6f;
-            padding: 0 25px;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: .1rem;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        .m-b-md {
-            margin-bottom: 30px;
-        }
-
-        .container {
-            margin-top: 5rem !important;
-            display: flex;
-            flex-flow: column wrap;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/layout.css') }}">
     @stack('styles')
 </head>
 <body>
@@ -83,12 +20,12 @@
         <a href="{{route('student.index')}}">{{__('header.home')}}</a>
     </div>
     <div class="top-right links">
-        <a style="float: left">{{__('header.user')}}
+        <a>{{__('header.user')}}
             @if(!empty($admin))
                 {{$admin}}
             @endif
         </a>
-        <form action="{{route('logout')}}" method="post" id="logout" style="float: right">
+        <form action="{{route('logout')}}" method="post" id="logout">
             @csrf
             <a href="javascript:$('#logout').submit();">{{__('header.logout')}}</a>
         </form>

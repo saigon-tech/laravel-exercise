@@ -6,5 +6,6 @@ return [
     'back' => '< BACK',
     'logout' => 'LOGOUT',
     'home' => 'HOME',
-    'user' => 'User:'
+    'user' => 'User:',
+    'title' => 'Laravel Exercise',
 ];
