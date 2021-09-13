@@ -45,7 +45,7 @@ class StudentController extends Controller
         //Get query
         $search = $request->query('search');
         $col = $request->query('col');
-        $order = $request->query('order');
+        $orders[$col] = $request->query('order');
 
         //Get all students
         $students = Student::all();
@@ -65,19 +65,19 @@ class StudentController extends Controller
 
         //Sort column
         if (empty($col) != true) {
-            if ($order == 'down') {
+            if ($orders[$col] == 'down') {
                 $students = $students->sortBy($col)->toArray();
                 $status = '8595';
-                $order = 'up';
+                $orders[$col] = 'up';
             } else {
                 $students = $students->sortByDesc($col)->toArray();
                 $status = '8593';
-                $order = 'down';
+                $orders[$col] = 'down';
             }
         } else {
             $students = $students->toArray();
             $status = null;
-            $order = null;
+            $orders[$col] = null;
         }
 
         //Convert an array to pagination
@@ -89,7 +89,7 @@ class StudentController extends Controller
             ->with('students', $students)
             ->with('search', $search)
             ->with('col', $col)
-            ->with('order', $order)
+            ->with('orders', $orders)
             ->with('status', $status);
     }
 

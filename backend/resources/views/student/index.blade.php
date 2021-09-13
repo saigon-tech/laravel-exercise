@@ -23,49 +23,49 @@
             <thead>
             <tr>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'id', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'id', 'search' => $search??'', 'order' => $orders['id']??'down'])}}">
                         {{__('student.id')}}
                         @if($col=='id')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'name', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'name', 'search' => $search??'', 'order' => $orders['name']??'down'])}}">
                         {{__('student.name')}}
                         @if($col=='name')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'birthday', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'birthday', 'search' => $search??'', 'order' => $orders['birthday']??'down'])}}">
                         {{__('student.birthday')}}
                         @if($col=='birthday')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'math', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'math', 'search' => $search??'', 'order' => $orders['math']??'down'])}}">
                         {{__('student.math')}}
                         @if($col=='math')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'music', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'music', 'search' => $search??'', 'order' => $orders['music']??'down'])}}">
                         {{__('student.music')}}
                         @if($col=='music')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'english', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'english', 'search' => $search??'', 'order' => $orders['english']??'down'])}}">
                         {{__('student.english')}}
                         @if($col=='english')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'gpa', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'gpa', 'search' => $search??'', 'order' => $orders['gpa']??'down'])}}">
                         {{__('student.gpa')}}
                         @if($col=='gpa')&#{{$status}};@endif
                     </a>
                 </th>
                 <th scope="col">
-                    <a href="{{route('student.index', ['col' => 'pass', 'search' => $search??'', 'order' => $order??'down'])}}">
+                    <a href="{{route('student.index', ['col' => 'pass', 'search' => $search??'', 'order' => $orders['pass']??'down'])}}">
                         {{__('student.pass')}}
                         @if($col=='pass')&#{{$status}};@endif
                     </a>
