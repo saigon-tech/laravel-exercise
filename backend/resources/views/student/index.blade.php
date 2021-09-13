@@ -10,6 +10,8 @@
             @csrf
             <input id="search" class="form-control me-2" name="search" placeholder="{{__('student.key_word')}}"
                    type="search" value="{{$search??''}}">
+            <input type="hidden" name="col" value="{{$col??''}}">
+            <input type="hidden" name="order" value="{{$orders[$col]=='down'?'up':'down'}}">
             <button type="submit" class="btn btn-info">{{__('student.search')}}</button>
         </form>
     </div>
