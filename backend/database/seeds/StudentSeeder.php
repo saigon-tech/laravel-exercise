@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Student;
 
 class StudentSeeder extends Seeder
 {
@@ -11,13 +12,6 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('students')->insert([
-            'name'=>'thanh',
-            'birthday'=>'1999-07-11',
-        ]);
-        DB::table('students')->insert([
-            'name'=>'hong',
-            'birthday'=>'1999-04-09',
-        ]);
+        factory(Student::class, 100)->create();
     }
 }

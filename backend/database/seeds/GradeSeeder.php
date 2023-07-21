@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Grade;
 
 class GradeSeeder extends Seeder
 {
@@ -11,10 +12,6 @@ class GradeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('grades')->insert([
-            'student_id'=>2,
-            'subject'=>'math',
-            'grade'=>2
-        ]);
+        factory(Grade::class, 100)->create();
     }
 }
