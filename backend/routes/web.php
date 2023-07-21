@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StudentListController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/login',  [AdminController::class,'login'])->name('login');
+
+Route::post('/submit-form',  [AdminController::class,'submitForm'])->name('submitForm');
+
+Route::get('/login-success', [AdminController::class,'loginSuccess'])->middleware('auth');
