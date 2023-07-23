@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Grade extends Model
 {
     protected $table = 'grades';
@@ -15,9 +16,10 @@ class Grade extends Model
         'grade',
     ];
 
-//    public function student()
-//    {
-//        return $this->belongsTo(Student::class, 'student_id', 'id');
-//    }
     public $timestamps = false;
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'student_id', 'id');
+    }
 }

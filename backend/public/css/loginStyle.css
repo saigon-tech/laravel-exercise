@@ -93,3 +93,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+.pagination {
+    justify-content: center;
+}

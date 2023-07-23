@@ -14,4 +14,9 @@ class Student extends Model
     ];
 
     public $timestamps = false;
+
+    public function grades()
+    {
+        return $this->hasMany(Grade::class,'student_id','id');
+    }
 }

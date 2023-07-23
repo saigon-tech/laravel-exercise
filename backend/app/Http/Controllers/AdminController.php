@@ -25,4 +25,9 @@ class AdminController extends Controller
     {
         return view('loginSuccess');
     }
+    public function logout()
+    {
+       Auth::logout();
+       return redirect()->intended('/login');
+    }
 }

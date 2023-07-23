@@ -24,3 +24,7 @@ Route::get('/login',  [AdminController::class,'login'])->name('login');
 Route::post('/submit-form',  [AdminController::class,'submitForm'])->name('submitForm');
 
 Route::get('/login-success', [AdminController::class,'loginSuccess'])->middleware('auth');
+
+Route::get('/logout', [AdminController::class,'logout'])->name('logout')->middleware('auth');
+
+Route::get('/student-list',  [StudentListController::class,'showStudentList'])->name('studentList')->middleware('auth');
