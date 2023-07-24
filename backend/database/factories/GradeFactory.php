@@ -2,9 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Grade;
+use App\Models\Grade;
 use Faker\Generator as Faker;
-use Illuminate\Support\Arr;
 
 
 $factory->define(Grade::class, function (Faker $faker) {
