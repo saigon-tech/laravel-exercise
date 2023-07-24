@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Admin;
+use App\Models\Admin;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 $factory->define(Admin::class, function (Faker $faker) {
     $username = $faker->unique()->username();
