@@ -18,7 +18,7 @@
         </form>
     </div>
     <div class="text-end px-5">
-        <button type="button" class="btn btn-primary">Add Student</button>
+        <a href="{{route('studentCreate')}}" class="btn btn-primary">Add Student</a>
     </div>
     @if ($students->isEmpty())
         <p>Không tìm thấy kết quả.</p>
@@ -63,7 +63,11 @@
                 @endphp
                 <tr>
                     <th scope="row">{{$item['id']}}</th>
-                    <td>{{$item['name']}}</td>
+                    <td>
+                        <a href="{{route('studentEdit',['id' => $item['id']])}}">
+                            {{$item['name']}}
+                        </a>
+                        </td>
                     <td>{{$item['birthday']}}</td>
                     <td>{{$math}}</td>
                     <td>{{$music}}</td>

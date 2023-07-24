@@ -7,4 +7,5 @@
 
 @section('content')
     <h1 class="text-center">Login Success</h1>
+    <a href="{{route('studentList')}}">Student List</a>
 @endsection

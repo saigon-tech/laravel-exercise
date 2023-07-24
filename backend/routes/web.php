@@ -28,3 +28,9 @@ Route::get('/login-success', [AdminController::class,'loginSuccess'])->middlewar
 Route::get('/logout', [AdminController::class,'logout'])->name('logout')->middleware('auth');
 
 Route::get('/student-list',  [StudentListController::class,'showStudentList'])->name('studentList')->middleware('auth');
+
+Route::get('/student-detail/create',  [StudentListController::class,'createStudent'])->name('studentCreate')->middleware('auth');
+Route::post('/student-detail/store',  [StudentListController::class,'studentStore'])->name('studentStore')->middleware('auth');
+
+Route::get('/student-detail/edit/{id}',  [StudentListController::class,'editStudent'])->name('studentEdit')->middleware('auth');
+Route::post('/student-detail/update/{id}',  [StudentListController::class,'updateStudent'])->name('studentUpdate')->middleware('auth');
