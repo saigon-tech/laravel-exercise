@@ -2,6 +2,7 @@
 
 use App\Models\Admin;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class AdminSeeder extends Seeder
 {
@@ -12,6 +13,11 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('admins')->insert([
+            'username'=>'admin',
+            'password'=>Hash::make('admin'),
+            'email'=>'admin@gmail.com'
+        ]);
         factory(Admin::class, 100)->create();
     }
 }
