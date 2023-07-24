@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Student::class, function (Faker $faker) {
     return [
         'name' => $faker->unique()->text(20),
-        'birthday' => $faker->date(),
+        'birthday' => $faker->dateTimeBetween('1990/01/01', '2015/01/01'),
     ];
 });
