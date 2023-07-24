@@ -12,8 +12,7 @@
             @csrf
             <input name="username" type="text" placeholder="username"/>
             <input name="password" type="password" placeholder="password"/>
-            <button type="submit">login</button>
-            <p class="message">Not registered? <a href="#">Create an account</a></p>
+            <button type="submit">Login</button>
             </form>
         </div>
         @if(session('error'))
