@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Grade;
+use App\Http\Models\Grade;
 use Faker\Generator as Faker;
 
 

@@ -1,26 +1,27 @@
 <?php
 
-namespace App\Models;
+namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Student extends Model
+class Grade extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'students';
+    protected $table = 'grades';
 
     /**
-     * The table associated with the model.
+     * The attributes that are mass assignable.
      *
-     * @var string
+     * @var string[]
      */
     protected $fillable = [
-        'name',
-        'birthday',
+        'student_id',
+        'subject',
+        'grade',
     ];
 
     /**
