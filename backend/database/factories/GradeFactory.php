@@ -1,0 +1,13 @@
+<?php
+
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+
+use App\Http\Models\Grade;
+use Faker\Generator as Faker;
+
+
+$factory->define(Grade::class, function (Faker $faker) {
+    return [
+        'grade' => $faker->numberBetween(0, 10)
+    ];
+});
