@@ -1,7 +1,7 @@
 <?php
 
-use App\Models\Grade;
-use App\Models\Student;
+use App\Http\Models\Grade;
+use App\Http\Models\Student;
 use Illuminate\Database\Seeder;
 
 class StudentSeeder extends Seeder

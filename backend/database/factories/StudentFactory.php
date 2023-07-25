@@ -2,7 +2,7 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Models\Student;
+use App\Http\Models\Student;
 use Faker\Generator as Faker;
 
 $factory->define(Student::class, function (Faker $faker) {

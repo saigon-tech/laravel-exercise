@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Admin;
+use App\Http\Models\Admin;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
