@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Grade;
+use App\Http\Requests\StudentRequest;
 use App\Student;
 use Illuminate\Http\Request;
 
 class StudentListController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return View
+     */
     public function showStudentList(Request $request)
     {
         $sortBy = $request->sort_by ?? '';
@@ -21,13 +26,21 @@ class StudentListController extends Controller
         return view('studentList', compact('students', 'keyword', 'sortBy', 'sortOrder'));
     }
 
-    public function createStudent(Request $request)
+    /**
+     * @return View
+     */
+    public function createStudent()
     {
         return view('studentDetail');
     }
 
-    public function studentStore(Request $request)
+    /**
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function studentStore(StudentRequest $request)
     {
+
         $student = new Student();
         $student->name = $request->name;
         $student->birthday = $request->birthday;
@@ -56,6 +69,11 @@ class StudentListController extends Controller
         return redirect()->back()->with('success', 'Create success');
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return View
+     */
     public function editStudent(Request $request, $id)
     {
         $student = Student::find($id);
@@ -71,10 +89,15 @@ class StudentListController extends Controller
             ['student_id', $id],
             ['subject', 'english']
         ])->get()->first();
-        return view('studentDetailEdit', compact('id', 'student', 'gradeMath', 'gradeMusic', 'gradeEnglish'));
+        return view('studentDetail', compact('id', 'student', 'gradeMath', 'gradeMusic', 'gradeEnglish'));
     }
 
-    public function updateStudent(Request $request, $id)
+    /**
+     * @param Request $request
+     * @param $id
+     * @return RedirectResponse
+     */
+    public function updateStudent(StudentRequest $request, $id)
     {
         $student = Student::find($id);
         $student->name = $request->name;
