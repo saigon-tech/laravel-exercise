@@ -13,7 +13,7 @@ class StudentSeeder extends Seeder
     {
        DB::table('Students')->insert([
            'name'=>'VinhHoang',
-           'birthday'=>'09/11/1997'
+           'birthday'=>\Carbon\Carbon::parse('1997/09/11'),
        ]);
     }
 }
