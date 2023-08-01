@@ -17,7 +17,7 @@ class CreateGradesTable extends Migration
             $table->id();
             $table->foreignid('student_id')->constrained('students');
             $table->enum('subject', ['Math', 'Music', 'English']);
-            $table->integer('grades');
+            $table->integer('grade');
         });
     }
 

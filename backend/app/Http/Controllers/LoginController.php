@@ -28,4 +28,10 @@ class LoginController extends Controller
     {
         return view ('login-success');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->intended('/login');
+    }
 }

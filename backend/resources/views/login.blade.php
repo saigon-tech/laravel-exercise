@@ -14,7 +14,7 @@
             </form>
         </div>
         @if(session('error'))
-            <p class="text-danger display-3 text-center">{{session('error')}}</p>
+            <p class="text-danger">{{session('error')}}</p>
         @endif
     </div
 @endsection
