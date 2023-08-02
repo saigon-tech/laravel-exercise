@@ -19,7 +19,7 @@
         </form>
     </div>
     <div class="text-end">
-        <button type="button" class="btn btn-outline-secondary">Add Student</button>
+        <a type="button" class="btn btn-outline-secondary" href="{{route('addStudent')}}">Add Student</a>
     </div>
     @if ($students->isEmpty())
         <p>No results were found.</p>

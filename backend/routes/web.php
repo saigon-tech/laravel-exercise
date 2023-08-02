@@ -29,3 +29,11 @@ Route::get('/login-success', [LoginController::class,'loginSuccess'])->middlewar
 Route::get('/student-list', [StudentListController::class,'studentList'])->name('studentList')->middleware('auth');
 
 Route::get('/logout', [LoginController::class,'logout'])->name('logout')->middleware('auth');
+
+Route::get('/student-info/add', [StudentlistController::class,'addStudent'])->name('addStudent')->middleware('auth');
+
+Route::post('/student-info/store',[StudentListController::class, 'storeStudent'])->name('storeStudent')->middleware('auth');
+
+Route::get('/student-info/edit/{id}',  [StudentListController::class,'editStudent'])->name('editStudent')->middleware('auth');
+
+Route::post('/student-info/update/{id}',  [StudentListController::class,'updateStudent'])->name('updateStudent')->middleware('auth');

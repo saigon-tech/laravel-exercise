@@ -9,12 +9,4 @@ class GradeSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        DB::table('grades')->insert([
-            'student_id'=>465,
-            'subject'=>'English',
-            'grade'=>9
-        ]);
-    }
 }
