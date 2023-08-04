@@ -1,8 +1,5 @@
 <?php
 
-use App\Admin;
-use App\Grade;
-use App\Student;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,7 +11,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AdminSeeder::class);
-        $this->call(StudentSeeder::class);
+        $this->call([
+            AdminSeeder::class,
+            StudentSeeder::class,
+        ]);
     }
 }
