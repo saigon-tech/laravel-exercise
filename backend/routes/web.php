@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -19,8 +20,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login',  [LoginController::class,'login'])->name('login');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 
-Route::post('/post-login', [LoginController::class,'postLogin'])->name('postLogin');
-
-Route::get('/login-success', [LoginController::class,'loginSuccess'])->middleware('auth');
+Route::post('/post-login', [LoginController::class, 'postLogin'])->name('postLogin');

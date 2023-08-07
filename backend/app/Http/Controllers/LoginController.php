@@ -18,14 +18,9 @@ class LoginController extends Controller
         $credentials = $request->validated();
         if (Auth::attempt($credentials)) {
             // Authentication passed...
-            return redirect()->intended('/login-success');
+            return redirect()->intended('/student-list');
         }
         // Authentication unsuccessfully...
-        return redirect()->intended('/login')->with('error', 'The username or password is incorrect');
-    }
-
-    public function loginSuccess()
-    {
-        return view('login-success');
+        return redirect()->intended('/login')->with('error', __('auth.failed'));
     }
 }
