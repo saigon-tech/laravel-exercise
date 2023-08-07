@@ -7,6 +7,7 @@ class AdminSeeder extends Seeder
 {
     public function run()
     {
+        \Illuminate\Support\Facades\Auth::
         factory(Admin::class, 100)->create();
     }
 }

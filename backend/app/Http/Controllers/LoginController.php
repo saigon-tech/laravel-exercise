@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,20 +13,19 @@ class LoginController extends Controller
         return view('login');
     }
 
-    public function postLogin(Request $request)
+    public function postLogin(LoginRequest $request)
     {
-        $credentials = $request->only('username', 'password');
-        if (Auth::attempt($credentials))
-        {
+        $credentials = $request->validated();
+        if (Auth::attempt($credentials)) {
             // Authentication passed...
             return redirect()->intended('/login-success');
         }
-            // Authentication unsuccessfully...
-            return redirect()->intended('/login')->with('error', 'The username or password is incorrect');
+        // Authentication unsuccessfully...
+        return redirect()->intended('/login')->with('error', 'The username or password is incorrect');
     }
 
     public function loginSuccess()
     {
-        return view ('login-success');
+        return view('login-success');
     }
 }

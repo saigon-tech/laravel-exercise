@@ -21,6 +21,6 @@ Route::get('/', function () {
 
 Route::get('/login',  [LoginController::class,'login'])->name('login');
 
-Route::post('/postLogin', [LoginController::class,'postLogin'])->name('postLogin');
+Route::post('/post-login', [LoginController::class,'postLogin'])->name('postLogin');
 
 Route::get('/login-success', [LoginController::class,'loginSuccess'])->middleware('auth');
