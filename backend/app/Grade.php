@@ -11,7 +11,6 @@ class Grade extends Model
         'subject',
         'grade',
     ];
-
     public $timestamps = false;
 
     public function student()

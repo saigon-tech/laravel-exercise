@@ -12,6 +12,6 @@ use BenSampo\Enum\Enum;
 final class GradeSubjectEnum extends Enum
 {
     public const MATH = 'Math';
-    public const ENGLISH = 'English';
     public const MUSIC = 'Music';
+    public const ENGLISH = 'English';
 }
