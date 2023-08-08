@@ -23,3 +23,5 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'login'])->name('login');
 
 Route::post('/post-login', [LoginController::class, 'postLogin'])->name('postLogin');
+
+Route::get('/student-list', [StudentController::class, 'studentList'])->name('studentList');
