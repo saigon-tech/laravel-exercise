@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\StudentListController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,16 +16,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('', function () {
     return view('welcome');
 });
 
-Route::get('/login',  [LoginController::class,'login'])->name('login');
+Route::get('login', [LoginController::class, 'login'])->name('login');
 
-Route::post('/postLogin', [LoginController::class,'postLogin'])->name('postLogin');
+Route::post('post-login', [LoginController::class, 'postLogin'])->name('postLogin');
 
-Route::get('/login-success', [LoginController::class,'loginSuccess'])->middleware('auth');
+Route::middleware(['auth'])->group(function () {
+    
 
-Route::get('/student-list', [StudentListController::class,'studentList'])->name('studentList')->middleware('auth');
+Route::get('logout', [LoginController::class,'logout'])->name('logout');
 
-Route::get('/logout', [LoginController::class,'logout'])->name('logout')->middleware('auth');
+Route::get('student-list', [StudentController::class, 'studentList'])->name('studentList');
+
+});
