@@ -20,15 +20,16 @@ Route::get('', function () {
     return view('welcome');
 });
 
-Route::get('login', [LoginController::class, 'login'])->name('login');
+Route::get('login',  [LoginController::class,'login'])->name('login');
 
-Route::post('post-login', [LoginController::class, 'postLogin'])->name('postLogin');
+Route::post('postLogin', [LoginController::class,'postLogin'])->name('postLogin');
 
-Route::middleware(['auth'])->group(function () {
-    
+Route::middleware(['auth'])
+    ->prefix('')
+    ->name('admin.')
+    ->group(function () {
 
-Route::get('logout', [LoginController::class,'logout'])->name('logout');
+    Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('student-list', [StudentController::class, 'studentList'])->name('studentList');
-
+    Route::get('student-list', [StudentController::class, 'studentList'])->name('studentList');
 });
