@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\StudentListController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,24 +16,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('', function () {
     return view('welcome');
 });
 
-Route::get('/login',  [LoginController::class,'login'])->name('login');
+Route::get('login', [LoginController::class, 'login'])->name('login');
 
-Route::post('/postLogin', [LoginController::class,'postLogin'])->name('postLogin');
+Route::post('postLogin', [LoginController::class, 'postLogin'])->name('postLogin');
 
-Route::get('/login-success', [LoginController::class,'loginSuccess'])->middleware('auth');
+Route::middleware(['auth'])
+    ->prefix('')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('student-list', [StudentController::class, 'studentList'])->name('studentList');
 
-Route::get('/student-list', [StudentListController::class,'studentList'])->name('studentList')->middleware('auth');
+        Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::get('/logout', [LoginController::class,'logout'])->name('logout')->middleware('auth');
+        Route::get('student-info/add', [StudentController::class, 'addStudent'])->name('addStudent');
 
-Route::get('/student-info/add', [StudentlistController::class,'addStudent'])->name('addStudent')->middleware('auth');
+        Route::post('student-info/store', [StudentController::class, 'storeStudent'])->name('storeStudent');
 
-Route::post('/student-info/store',[StudentListController::class, 'storeStudent'])->name('storeStudent')->middleware('auth');
+        Route::get('student-info/edit/{id}', [StudentController::class, 'editStudent'])->name('editStudent');
 
-Route::get('/student-info/edit/{id}',  [StudentListController::class,'editStudent'])->name('editStudent')->middleware('auth');
+        Route::post('student-info/update/{id}', [StudentController::class, 'updateStudent'])->name('updateStudent');
 
-Route::post('/student-info/update/{id}',  [StudentListController::class,'updateStudent'])->name('updateStudent')->middleware('auth');
+    });

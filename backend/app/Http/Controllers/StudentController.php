@@ -1,24 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Grade;
+use App\Http\Requests\StudentRequest;
+use App\Http\Services\StudentService;
 use App\Student;
 use Illuminate\Http\Request;
 
-class StudentListController extends Controller
+class StudentController extends Controller
 {
-    public function studentList(Request $request)
+    protected $studentService;
+
+    public function __construct(StudentService $studentService)
     {
-        $sortBy = $request->sort_by ?? '';
-        $sortOrder = $request->sort_order ?? '';
-        $keyword = $request->keyword ?? '';
+        $this->studentService = $studentService;
+    }
 
-        if ($sortBy != '' && $sortOrder != '') {
-            $students = Student::where('name', 'like', "%$keyword%")->orderBy($sortBy, $sortOrder)->paginate(10);
-        } else $students = Student::where('name', 'like', "%$keyword%")->paginate(10);
-
-        return view('student-list', compact('students', 'keyword', 'sortBy', 'sortOrder'));
+    public function studentList(StudentRequest $request)
+    {
+        $requests = $request->all();
+        $students = $this->studentService->getList($request->all());
+        $link = $students->appends([
+            'keyword' => data_get($requests, 'keyword'),
+            'field' => data_get($requests, 'field'),
+            'order' => data_get($requests, 'order'),
+        ]);
+        return view('student-list', compact('students', 'link'));
     }
     public function addStudent(Request $request)
     {

@@ -5,11 +5,11 @@
 @section('content')
     <div class="d-flex justify-content-between">
         <h1>Student</h1>
-        <a href="{{route('logout')}}" class="btn d-flex align-items-center btn-outline-secondary">Logout</a>
+        <a href="{{route('admin.logout')}}" class="btn d-flex align-items-center btn-outline-secondary">Logout</a>
     </div>
 
     <form class="input-group mb-3 w-25 d-flex flex-column mx-auto" method="post"
-    action="{{isset($id) ? route('updateStudent', ['id'=>$id]) : route('storeStudent')}}">
+    action="{{isset($id) ? route('admin.updateStudent', ['id'=>$id]) : route('admin.storeStudent')}}">
         @csrf
         <div class="mb-3">
             <label class="form-label">Name</label>
@@ -52,7 +52,7 @@
     @if(session('success'))
         <p class="text-success display-4 text-center">{{session('success')}}</p>
         <div class="text-center">
-            <a href="{{route('studentList')}}">Student List</a>
+            <a href="{{route('admin.studentList')}}">Student List</a>
         </div>
     @endif
 @endsection

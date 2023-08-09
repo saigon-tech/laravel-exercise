@@ -3,10 +3,9 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Admin;
-use App\Model;
 use Faker\Generator as Faker;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 $factory->define(Admin::class, function (Faker $faker) {
     $username = $faker->unique()->username();
@@ -16,6 +15,6 @@ $factory->define(Admin::class, function (Faker $faker) {
     return [
         'username' => $username,
         'password' => Hash::make('123bonnamsau@@'),
-        'email' => str::random(8).'@gmail.com'
+        'email' => str::random(8) . '@gmail.com'
     ];
 });
