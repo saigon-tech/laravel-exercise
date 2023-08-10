@@ -44,6 +44,7 @@ class StudentController extends Controller
             return redirect()->back()->with('success', 'Student added');
         } catch (\Exception $exception) {
             DB::rollBack();
+            return redirect()->back()->with('error', 'Add Student Fail');
         }
     }
 
