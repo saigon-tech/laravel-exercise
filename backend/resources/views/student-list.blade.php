@@ -19,7 +19,7 @@
         </form>
     </div>
     <div class="text-end">
-        <button type="button" class="btn btn-outline-secondary">Add Student</button>
+        <a type="button" class="btn btn-outline-secondary" href="{{route('admin.addStudent')}}">Add Student</a>
     </div>
     @if ($students->isEmpty())
         <p>No results were found.</p>
@@ -48,7 +48,11 @@
                 @endphp
                 <tr>
                     <th scope="row">{{$student->id}}</th>
-                    <td>{{$student->name}}</td>
+                    <td>
+                        <a href="{{ route('admin.editStudent', $student) }}">
+                            {{ $student->name }}
+                        </a>
+                    </td>
                     <td>{{$student->birthday}}</td>
                     @foreach(config('constants.grades.subjects') as $subject)
                         <td>

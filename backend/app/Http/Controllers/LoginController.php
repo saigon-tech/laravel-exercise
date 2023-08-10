@@ -22,6 +22,7 @@ class LoginController extends Controller
         // Authentication unsuccessfully...
         return redirect()->intended('/login')->with('error', __('auth.failed'));
     }
+
     public function logout()
     {
         Auth::logout();
