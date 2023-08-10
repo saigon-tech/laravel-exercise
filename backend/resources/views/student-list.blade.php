@@ -48,7 +48,11 @@
                 @endphp
                 <tr>
                     <th scope="row">{{$student->id}}</th>
-                    <td>{{$student->name}}</td>
+                    <td>
+                        <a href="{{ route('admin.editStudent', $student) }}">
+                            {{ $student->name }}
+                        </a>
+                    </td>
                     <td>{{$student->birthday}}</td>
                     @foreach(config('constants.grades.subjects') as $subject)
                         <td>

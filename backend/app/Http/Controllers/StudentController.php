@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Grade;
 use App\Http\Requests\StudentRequest;
+use App\Http\Requests\StudentStoreRequest;
+use App\Http\Requests\StudentUpdateRequest;
 use App\Http\Services\StudentService;
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
@@ -27,89 +29,40 @@ class StudentController extends Controller
         ]);
         return view('student-list', compact('students', 'link'));
     }
+
     public function addStudent(Request $request)
     {
         return view('student-info');
     }
-    public function  storeStudent(Request $request)
+
+    public function storeStudent(StudentStoreRequest $request)
     {
-        $student = new Student();
-        $student->name = $request->name;
-        $student->birthday = $request->birthday;
-        $student->save();
-
-        $gradeMath = new Grade();
-        $gradeMath->student_id = $student->id;
-        $gradeMath->subject = 'Math';
-        $gradeMath->grade = $request->math;
-        $gradeMath->save();
-
-        $gradeMusic = new Grade();
-        $gradeMusic->student_id = $student->id;
-        $gradeMusic->subject = 'Music';
-        $gradeMusic->grade = $request->music;
-        $gradeMusic->save();
-
-        $gradeEnglish = new Grade();
-        $gradeEnglish->student_id = $student->id;
-        $gradeEnglish->subject = 'English';
-        $gradeEnglish->grade = $request->english;
-        $gradeEnglish->save();
-
-        return redirect()->back()->with('success', 'Student added');
+        try {
+            DB::beginTransaction();
+            $this->studentService->store($request->validated());
+            DB::commit();
+            return redirect()->back()->with('success', 'Student added');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
     }
-    public function editStudent(Request $request, $id)
+
+    public function editStudent(Student $student)
     {
-        $student = Student::find($id);
-        $gradeMath = Grade::where([
-            ['student_id', $id],
-            ['subject', 'Math']
-        ])->get()->first();
-        $gradeMusic = Grade::where([
-            ['student_id', $id],
-            ['subject', 'Music']
-        ])->get()->first();
-        $gradeEnglish = Grade::where([
-            ['student_id', $id],
-            ['subject', 'English']
-        ])->get()->first();
-        return view('student-info', compact('id', 'student', 'gradeMath', 'gradeMusic', 'gradeEnglish'));
+        $grades = $student->grades->pluck('grade', 'subject');
+        return view('student-info', compact('student', 'grades'));
     }
-    public function updateStudent(Request $request, $id)
+
+    public function updateStudent(StudentUpdateRequest $request, Student $student)
     {
-        $student = Student::find($id);
-        $student->name = $request->name;
-        $student->birthday = $request->birthday;
-        $student->save();
-
-        $gradeMath = Grade::where([
-            ['student_id', $id],
-            ['subject', 'Math']
-        ])->get()->first();
-        $gradeMath->student_id = $id;
-        $gradeMath->subject = 'Math';
-        $gradeMath->grade = $request->math;
-        $gradeMath->save();
-
-        $gradeMusic = Grade::where([
-            ['student_id', $id],
-            ['subject', 'Music']
-        ])->get()->first();
-        $gradeMusic->student_id = $id;
-        $gradeMusic->subject = 'Music';
-        $gradeMusic->grade = $request->music;
-        $gradeMusic->save();
-
-
-        $gradeEnglish = Grade::where([
-            ['student_id', $id],
-            ['subject', 'English']
-        ])->get()->first();
-        $gradeEnglish->student_id = $id;
-        $gradeEnglish->subject = 'English';
-        $gradeEnglish->grade = $request->english;
-        $gradeEnglish->save();
-
-        return redirect()->back()->with('success', 'Edit success');
+        try {
+            DB::beginTransaction();
+            $this->studentService->update($student, $request->validated());
+            DB::commit();
+            return redirect()->back()->with('success', 'Edit success');
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Edit Fail');
+        }
     }
 }

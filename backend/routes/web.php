@@ -36,8 +36,8 @@ Route::middleware(['auth'])
 
         Route::post('student-info/store', [StudentController::class, 'storeStudent'])->name('storeStudent');
 
-        Route::get('student-info/edit/{id}', [StudentController::class, 'editStudent'])->name('editStudent');
+        Route::get('student-info/edit/{student}', [StudentController::class, 'editStudent'])->name('editStudent');
 
-        Route::post('student-info/update/{id}', [StudentController::class, 'updateStudent'])->name('updateStudent');
+        Route::post('student-info/update/{student}', [StudentController::class, 'updateStudent'])->name('updateStudent');
 
     });
