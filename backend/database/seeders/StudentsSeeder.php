@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class StudentsSeeder extends Seeder
 {
@@ -13,19 +14,19 @@ class StudentsSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('students')->insert([
-            'name' => 'Nhan',
-            'birthday' => '2000/01/01',
-        ]);
+        function insertStudentsSeeder($name, $bd):void {
+            DB::table('students')->insert([
+                'name' => $name,
+                'birthday' => $bd,
+            ]);
+        }
 
-        DB::table('students')->insert([
-            'name' => 'Van Hau',
-            'birthday' => '1993/01/01',
-        ]);
+        Schema::disableForeignKeyConstraints();
+        DB::table('students')->truncate();
+        Schema::enableForeignKeyConstraints();
 
-        DB::table('students')->insert([
-            'name' => 'Van Toan',
-            'birthday' => '1995/01/01',
-        ]);
+        insertStudentsSeeder('Nhan', '2000/01/01');
+        insertStudentsSeeder('Van Hau', '1993/01/01');
+        insertStudentsSeeder('Van Toan', '1995/01/01');
     }
 }

@@ -13,6 +13,7 @@ class AdminsSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('admins')->truncate();
         DB::table('admins')->insert([
             'username' => 'admin',
             'password' => 'admin',

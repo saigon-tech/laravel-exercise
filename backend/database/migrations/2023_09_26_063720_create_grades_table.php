@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('grades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('student_id')->constrained('students');
-            $table->integer('subject')->nullable(false);
-            $table->integer('grade')->nullable(false);
+            $table->integer('subject');
+            $table->integer('grade');
         });
     }
 

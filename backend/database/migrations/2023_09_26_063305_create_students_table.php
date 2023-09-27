@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 20)->nullable(false);
-            $table->date('birthday')->nullable(false);
+            $table->string('name', 20);
+            $table->date('birthday');
         });
     }
 
