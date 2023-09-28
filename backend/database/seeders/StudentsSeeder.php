@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Grade;
+use App\Models\Student;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,17 +15,8 @@ class StudentsSeeder extends Seeder
     public function run(): void
     {
         DB::table('students')->truncate();
-        DB::table('students')->insert([
-            [
-                'name' => 'Nguyen Van A',
-                'birthday' => '2000/02/14'
-            ],[
-                'name' => 'Nguyen Van B',
-                'birthday' => '2000/02/13',
-            ],[
-                'name' => 'Le Thi C',
-                'birthday' => '2000/04/14',
-            ],
-        ]);
+        DB::table('grades')->truncate();
+
+        Student::factory(10)->has(Grade::factory(3))->create();
     }
 }
