@@ -14,19 +14,18 @@ class StudentsSeeder extends Seeder
      */
     public function run(): void
     {
-        function insertStudentsSeeder($name, $bd):void {
-            DB::table('students')->insert([
-                'name' => $name,
-                'birthday' => $bd,
-            ]);
-        }
-
-        Schema::disableForeignKeyConstraints();
         DB::table('students')->truncate();
-        Schema::enableForeignKeyConstraints();
-
-        insertStudentsSeeder('Nhan', '2000/01/01');
-        insertStudentsSeeder('Van Hau', '1993/01/01');
-        insertStudentsSeeder('Van Toan', '1995/01/01');
+        DB::table('students')->insert([
+            [
+                'name' => 'Nguyen Van A',
+                'birthday' => '2000/02/14'
+            ],[
+                'name' => 'Nguyen Van B',
+                'birthday' => '2000/02/13',
+            ],[
+                'name' => 'Le Thi C',
+                'birthday' => '2000/04/14',
+            ]
+        ]);
     }
 }
