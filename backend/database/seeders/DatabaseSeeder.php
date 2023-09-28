@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         $this->call([
             AdminsSeeder::class,
-            StudentsSeeder::class,
+            GradesSeeder::class,
+            StudentsSeeder::class
         ]);
         Schema::enableForeignKeyConstraints();
     }
