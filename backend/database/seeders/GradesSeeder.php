@@ -34,7 +34,7 @@ class GradesSeeder extends Seeder
                 'student_id' => '1',
                 'subject' => '2',
                 'grade' => '9'
-            ],
+            ]
         ]);
     }
 }

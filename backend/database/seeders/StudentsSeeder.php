@@ -23,7 +23,7 @@ class StudentsSeeder extends Seeder
             ],[
                 'name' => 'Le Thi C',
                 'birthday' => '2000/04/14',
-            ]
+            ],
         ]);
     }
 }

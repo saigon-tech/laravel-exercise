@@ -16,7 +16,7 @@ class AdminsSeeder extends Seeder
         DB::table('admins')->insert([
             'username' => 'admin',
             'password' => 'admin',
-            'email' => 'admin@gmail.com',
+            'email' => 'admin@gmail.com'
         ]);
     }
 }
