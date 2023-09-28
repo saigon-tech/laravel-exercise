@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Student;
+use App\Models\Grade;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\DB;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Grade>
+ * @extends Factory<Grade>
  */
 class GradeFactory extends Factory
 {
@@ -18,9 +17,7 @@ class GradeFactory extends Factory
      */
     public function definition(): array
     {
-        $student = DB::table('students')->inRandomOrder()->first();
         return [
-            'student_id' => $student->id,
             'subject' => fake()->numberBetween(1, 3),
             'grade' => fake()->numberBetween(0, 10),
         ];

@@ -11,4 +11,8 @@ class Grade extends Model
 
     protected  $fillable = ['id', 'student_id', 'subject', 'grade'];
     public $timestamps = false;
+
+    public function student() {
+        return $this->belongsTo(Student::class, 'student_id', 'id');
+    }
 }

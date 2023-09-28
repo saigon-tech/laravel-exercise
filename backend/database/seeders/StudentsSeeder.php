@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Grade;
 use App\Models\Student;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class StudentsSeeder extends Seeder
 {
@@ -14,10 +14,9 @@ class StudentsSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
         DB::table('students')->truncate();
-        Schema::enableForeignKeyConstraints();
+        DB::table('grades')->truncate();
 
-        Student::factory(10)->create();
+        Student::factory(10)->has(Grade::factory(3))->create();
     }
 }
