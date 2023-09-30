@@ -12,7 +12,10 @@ class LoginController extends Controller
     /**
      * Get page login
      */
-    public function login(): View {
+    public function login(): View|RedirectResponse {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('home');
+        }
         return view('login');
     }
 
@@ -27,9 +30,9 @@ class LoginController extends Controller
 
        if (Auth::guard('admin')->attempt($credentials)){
            $request->session()->regenerate();
-           return redirect()->intended('/students');
+           return redirect()->intended();
        }
 
-        return redirect()->intended('/login')->with('error', 'The username or password is incorrect');
+       return redirect()->route('login-page')->with('error', trans('auth.error_login'));
     }
 }

@@ -38,7 +38,7 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'user',
+            'provider' => 'users',
         ],
         'admin' => [
             'driver' => 'session',
@@ -71,7 +71,6 @@ return [
         'admins' => [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
-            'username' => 'username',
         ],
     ],
 
@@ -115,5 +114,4 @@ return [
     */
 
     'password_timeout' => 10800,
-
 ];

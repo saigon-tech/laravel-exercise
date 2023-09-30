@@ -15,7 +15,6 @@
 
         <div>
             <form action="{{ route('login') }}" method="post" class="mx-auto w-4/5 p-10">
-                @method('post')
                 @csrf
                 <div class="flex items-center">
                     <label for="username" class="block w-32">Username:</label>
