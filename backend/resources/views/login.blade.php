@@ -36,10 +36,10 @@
             </ul>
         </div>
     @endif
-    @if(session('logged-in'))
+    @if(session('login_fail'))
         <div class="alert alert-danger w-6/12 text-red-300 m-auto">
             <ul>
-                <li>* {{ session('logged-in') }}</li>
+                <li>* {{ session('login_fail') }}</li>
             </ul>
         </div>
     @endif
