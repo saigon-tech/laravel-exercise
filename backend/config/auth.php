@@ -40,6 +40,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -64,11 +68,10 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
+        ],
     ],
 
     /*
@@ -77,7 +80,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | You may specify multiple password reset configurations if you have more
-    | than one user table or model in the application and you want to have
+    | than one user table or model in the application, and you want to have
     | separate password reset settings based on the specific user types.
     |
     | The expiry time is the number of minutes that each reset token will be
@@ -111,5 +114,4 @@ return [
     */
 
     'password_timeout' => 10800,
-
 ];
