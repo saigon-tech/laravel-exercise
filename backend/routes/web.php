@@ -19,5 +19,5 @@ Route::get('/', function () {
 })->name('home');
 Route::get('/login', [LoginController::class, 'getLogin'])->name('login_page');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
-
+});
 
