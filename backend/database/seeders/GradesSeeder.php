@@ -2,23 +2,35 @@
 
 namespace Database\Seeders;
 
-use App\Models\Grade;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class GradesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
-
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
         DB::table('grades')->truncate();
-        Schema::enableForeignKeyConstraints();
-
-        Grade::factory(10)->create();
+        DB::table('grades')->insert([
+            [
+                'student_id' => '1',
+                'subject' => '1',
+                'grade' => '6'
+            ],[
+                'student_id' => '2',
+                'subject' => '2',
+                'grade' => '8'
+            ],[
+                'student_id' => '3',
+                'subject' => '3',
+                'grade' => '7'
+            ],[
+                'student_id' => '1',
+                'subject' => '2',
+                'grade' => '9'
+            ]
+        ]);
     }
 }

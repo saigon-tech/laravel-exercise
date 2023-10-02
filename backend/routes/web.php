@@ -22,3 +22,4 @@ Route::prefix('login')->group(function () {
     Route::get('/', [LoginController::class, 'login'])->name('login-page');
     Route::post('/', [LoginController::class, 'handleLogin'])->name('login');
 });
+
