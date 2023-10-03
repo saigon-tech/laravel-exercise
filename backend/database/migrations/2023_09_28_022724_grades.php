@@ -15,8 +15,8 @@ return new class extends Migration {
             $table->increments('id');
             $table->unsignedInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
-            $table->integer('subject');
-            $table->integer('grade');
+            $table->integer('subject')->nullable(false);
+            $table->integer('grade')->nullable(false);
         });
     }
 

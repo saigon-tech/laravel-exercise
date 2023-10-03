@@ -19,5 +19,6 @@ Route::get('/', function () {
 })->name('home');
 Route::get('/login', [LoginController::class, 'getLogin'])->name('login_page');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
-
+Route::get('/student-detail', [\App\Http\Controllers\StudentController::class,'index'])->name('student_detail');
+Route::get('/student-detail-search', [\App\Http\Controllers\StudentController::class,'search'])->name('student_search');
 
