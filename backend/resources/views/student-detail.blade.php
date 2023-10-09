@@ -12,15 +12,19 @@
 <div class="m3-3 w-1/2  mt-5 m-auto border rounded-lg py-10">
     <div class="flex justify-between px-5">
         <h1 class="text-2xl text-center font-bolder">Student</h1>
-        <button class="px-4 bg-red-500 text-center border rounded-md py-2">Logout</button>
+        @auth('admins')
+            <a href="{{ route('logout') }}"
+               class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 px-4 py-2 bg-red-300">Log
+                out</a>
+        @endauth
     </div>
-    <form method="get" class="flex align-middle w-8/12 m-auto gap-5" action={{ route('student_search') }} >
+    <form method="get" class="flex align-middle w-8/12 m-auto gap-5" action={{ route('student_detail') }} >
         @csrf
         <label for="searchInput" class="item-center h-full my-auto">Name:</label>
         <div class="flex">
             <input id="searchInput" name="searchInput" placeholder="keyword"
                    class="p-2 border rounded-md w-50 focus:outline-none">
-            <button type="submit" class=" px-4 bg-green-500 text-center border rounded-md" >Search</button>
+            <button type="submit" class=" px-4 bg-green-500 text-center border rounded-md">Search</button>
         </div>
 
     </form>
@@ -34,9 +38,9 @@
                 <th>No</th>
                 <th>Name</th>
                 <th>Birthday</th>
-                <th>Math</th>
-                <th>Music</th>
-                <th>English</th>
+                @foreach($subjects as $subject => $value)
+                    <th>{{ ucfirst(strtolower($subject)) }}</th>
+                @endforeach
                 <th>GPA</th>
                 <th>Pass</th>
             </tr>
@@ -47,16 +51,11 @@
                     <td class="text-center">{{ $student->id }}</td>
                     <td>{{ $student->name }}</td>
                     <td class="text-center">{{ $student->birthday }}</td>
-
-                    @foreach($student->grades->sortBy('subject') as $grade)
-                        <td class="text-center">{{$grade->grade}}</td>
+                    @foreach($subjects as $subject)
+                        <td class="text-center">{{$student->getGrade($subject)}}</td>
                     @endforeach
-                    <td>{{round($student->grades->avg('grade'),1)}}</td>
-                    @if($student->grades->avg('grade')>5)
-                        <td class="text-center">Y</td>
-                    @else
-                        <td class="text-center">N</td>
-                    @endif
+                    <td class="text-center">{{ $student->grade_avg }}</td>
+                    <td class="text-center">{{$student->check_pass()}}</td>
                 </tr>
             @endforeach
             </tbody>

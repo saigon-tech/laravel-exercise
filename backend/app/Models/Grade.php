@@ -7,9 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Grade extends Model
 {
-    //
-        public function student():BelongsTo
+    public function student(): BelongsTo
     {
-        return $this->belongsTo(Student::class, 'student_id','id');
+        return $this->belongsTo(Student::class, 'student_id', 'id');
     }
 }

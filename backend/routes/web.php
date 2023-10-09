@@ -17,8 +17,9 @@ use  App\Http\Controllers\LoginController;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('/login', [LoginController::class, 'getLogin'])->name('login_page');
+Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
-Route::get('/student-detail', [\App\Http\Controllers\StudentController::class,'index'])->name('student_detail');
-Route::get('/student-detail-search', [\App\Http\Controllers\StudentController::class,'search'])->name('student_search');
+Route::get('/logout', [LoginController::class,'logout'])->name('logout');
+Route::get('/student-detail', [\App\Http\Controllers\StudentController::class, 'index'])->name('student_detail');
+
 
