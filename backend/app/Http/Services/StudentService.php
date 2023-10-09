@@ -5,11 +5,15 @@ namespace App\Http\Services;
 use App\Enums\GradeSubjectEnum;
 use App\Models\Student;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class StudentService
 {
-    static function render(?Request $request): View
+    /**
+     * Get student list or searched student list
+     * @param  Request|null  $request
+     * @return array
+     */
+    public static function getStudentList(?Request $request): array
     {
         $students = Student::paginate(2);
         $subjects = GradeSubjectEnum::asArray();
@@ -17,6 +21,6 @@ class StudentService
         if ($search !== '') {
             $students = Student::query()->where('name', 'like', "%{$search}%")->paginate(2);
         }
-        return view('student-detail', compact('students','subjects'));
+        return ['students' => $students, 'subjects' => $subjects];
     }
 }

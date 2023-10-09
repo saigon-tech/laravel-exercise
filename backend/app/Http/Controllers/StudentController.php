@@ -15,6 +15,7 @@ class StudentController extends Controller
      */
     public function index(?Request $request): View
     {
-        return StudentService::render($request);
+        $data = StudentService::getStudentList($request);
+        return view('student-detail', $data);
     }
 }

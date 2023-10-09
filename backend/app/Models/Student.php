@@ -40,10 +40,10 @@ class Student extends Model
      * get the pass/fail base on GPA
      * @return string
      */
-    public function check_pass(): string
+    public function checkPass(): string
     {
         $avgGrade = $this->grades()->avg('grade');
-        if ($avgGrade > 5) {
+        if ($avgGrade > config('constant.min_pass_grade')) {
             return trans('auth.gpa_pass');
         } else {
             return trans('auth.gpa_fail');

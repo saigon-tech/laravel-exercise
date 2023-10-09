@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\LoginController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,6 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
 Route::get('/logout', [LoginController::class,'logout'])->name('logout');
-Route::get('/student-detail', [\App\Http\Controllers\StudentController::class, 'index'])->name('student_detail');
+Route::get('/student-list', [StudentController::class, 'index'])->name('student_list');
 
 

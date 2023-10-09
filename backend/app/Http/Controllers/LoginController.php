@@ -39,12 +39,21 @@ class LoginController extends Controller
         return redirect()->intended('/login')->with('login_fail', trans('auth.login_fail'));
     }
 
+    /**
+     * Log user out after checked logged in .
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
     public function logout(Request $request): RedirectResponse
     {
-        Auth::guard('admins')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/');
+        if (Auth::guard('admins')->check()) {
+            Auth::guard('admins')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/');
+        }else{
+            return redirect()->intended('/login');
+        }
     }
 }
 

@@ -18,7 +18,7 @@
                 out</a>
         @endauth
     </div>
-    <form method="get" class="flex align-middle w-8/12 m-auto gap-5" action={{ route('student_detail') }} >
+    <form method="get" class="flex align-middle w-8/12 m-auto gap-5" action={{ route('student_list') }} >
         @csrf
         <label for="searchInput" class="item-center h-full my-auto">Name:</label>
         <div class="flex">
@@ -55,7 +55,7 @@
                         <td class="text-center">{{$student->getGrade($subject)}}</td>
                     @endforeach
                     <td class="text-center">{{ $student->grade_avg }}</td>
-                    <td class="text-center">{{$student->check_pass()}}</td>
+                    <td class="text-center">{{$student->checkPass()}}</td>
                 </tr>
             @endforeach
             </tbody>
