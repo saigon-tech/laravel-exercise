@@ -2,20 +2,28 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GradeSubjectEnum;
+use App\Http\Requests\StudentListRequest;
 use App\Http\Services\StudentService;
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class StudentController extends Controller
 {
+    protected StudentService $studentService;
+    public function __construct()
+    {
+        $this->studentService = resolve(StudentService::class);
+    }
     /**
      * Display student's detail page.
-     * @param  Request|null  $request
+     * @param  StudentListRequest  $request
      * @return View
      */
-    public function index(?Request $request): View
+    public function index(StudentListRequest $request): View
     {
-        $students = StudentService::getStudentList($request);
-        return view('student.list', $students);
+        $subjects = GradeSubjectEnum::asArray();
+        $limit = config('constant.pagination_per_page');
+        $students = $this->studentService->getStudentList($request->all())->paginate($limit);
+        return view('student.list', compact('students', 'subjects'));
     }
 }

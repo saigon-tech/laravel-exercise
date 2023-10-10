@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Student extends Model
 {
     /**
+     * Get grades of student
      * @return HasMany
      */
     public function grades(): HasMany
@@ -48,5 +50,15 @@ class Student extends Model
         } else {
             return trans('auth.gpa_fail');
         }
+    }
+    /**
+     * Get search-by-name scope builder
+     * @param $query
+     * @param $search
+     * @return mixed
+     */
+    public static function scopeFindName($query, $search): Builder
+    {
+        return $query->where('name', 'like', "%{$search}%");
     }
 }
