@@ -21,6 +21,6 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
 Route::get('/logout', [LoginController::class,'logout'])->name('logout');
-Route::get('/student-list', [StudentController::class, 'index'])->name('student_list');
+Route::get('/student', [StudentController::class, 'index'])->name('student_list');
 
 

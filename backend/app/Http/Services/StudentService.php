@@ -15,7 +15,7 @@ class StudentService
      */
     public static function getStudentList(?Request $request): array
     {
-        $students = Student::paginate(2);
+        $students = Student::paginate(config('constant.pagination_per_page'));
         $subjects = GradeSubjectEnum::asArray();
         $search = $request->input('searchInput');
         if ($search !== '') {
