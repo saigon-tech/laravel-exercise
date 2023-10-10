@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Requests\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use JetBrains\PhpStorm\NoReturn;
 
 class LoginController extends Controller
 {
@@ -15,7 +15,7 @@ class LoginController extends Controller
      * Display login page with authenticated process.
      * @return View
      */
-    public function getLogin(): view
+    public function getLogin(): View
     {
         if (Auth::guard('admins')->check()) {
             return view('welcome');
@@ -26,20 +26,34 @@ class LoginController extends Controller
 
     /**
      * Validate, check authentication and redirect user after login.
-     * @param  Request  $request
+     * @param  LoginRequest  $request
      * @return RedirectResponse
      */
-    public function postLogin(Request $request): RedirectResponse
+    public function postLogin(LoginRequest $request): RedirectResponse
     {
-        $credentials = $request->validate([
-            'username' => 'required|min:6',
-            'password' => 'required',
-        ]);
-        if (Auth::guard('admins')->attempt($credentials)) {
+        $validated = $request->validated();
+        if (Auth::guard('admins')->attempt($validated)) {
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
         return redirect()->intended('/login')->with('login_fail', trans('auth.login_fail'));
+    }
+
+    /**
+     * Log user out after checked logged in .
+     * @param  Request  $request
+     * @return RedirectResponse
+     */
+    public function logout(Request $request): RedirectResponse
+    {
+        if (Auth::guard('admins')->check()) {
+            Auth::guard('admins')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/');
+        }else{
+            return redirect()->intended('/login');
+        }
     }
 }
 
