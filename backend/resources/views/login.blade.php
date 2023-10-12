@@ -11,7 +11,7 @@
 <body>
 <div class="m3-3 w-1/2  mt-5 m-auto border rounded-lg py-20">
     <h1 class="text-2xl my-3 font-bolder text-center">Login</h1>
-    <form method="post" action={{ route('post_login') }} >
+    <form method="post" action={{ route('login.post') }} >
         @csrf
         <div class="w-3/5 m-auto flex gap-2 mb-2">
             <label for="username" class="basis-1/3 p-2 h-full my-auto">Username:</label>

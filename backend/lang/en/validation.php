@@ -180,6 +180,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'grades' => [
+            'MATH' => 'Math',
+            'MUSIC' => 'Music',
+            'ENGLISH' => 'English',
+        ],
+    ],
 
 ];

@@ -28,10 +28,18 @@ class StudentController extends Controller
      */
     public function index(StudentListRequest $request): View
     {
+        $parameters = $request->validated();
         $subjects = GradeSubjectEnum::asArray();
         $limit = config('constant.pagination_per_page');
-        $students = $this->studentService->getStudentList($request->all())->paginate($limit);
-        return view('student.list', compact('students', 'subjects'));
+        $students = $this->studentService->getStudentList($parameters)
+            ->paginate($limit);
+
+        $links = $students->appends([
+            'searchInput' => data_get($parameters, 'searchInput'),
+            'page' => data_get($parameters, 'page'),
+            'limit' => data_get($parameters, 'limit'),
+        ]);
+        return view('student.list', compact('students', 'subjects', 'links'));
     }
 
     /**
@@ -52,9 +60,10 @@ class StudentController extends Controller
     public function getCreate(): View
     {
         $subjects = GradeSubjectEnum::asArray();
-        $student = null ;
+        $student = null;
         return view('student.detail', compact('student', 'subjects'));
     }
+
     /**
      * Update student's information
      * @param  StudentUpdateRequest  $request
@@ -73,7 +82,7 @@ class StudentController extends Controller
             })
             ->toArray();
         $student->grades()->upsert($grades, ['id'], ['grade']);
-        return redirect()->route('student_list');
+        return redirect()->route('student.list');
     }
 
     /**
@@ -84,7 +93,7 @@ class StudentController extends Controller
     public function store(StudentCreateRequest $request): RedirectResponse
     {
         $student = new Student($request->all());
-        $student ->save();
+        $student->save();
         $grades = collect($request->get('grades'))
             ->map(function ($grade, $subject) {
                 return [
@@ -93,6 +102,6 @@ class StudentController extends Controller
                 ];
             })->toArray();
         $student->grades()->createMany($grades);
-        return redirect()->route('student_list');
+        return redirect()->route('student.list');
     }
 }
