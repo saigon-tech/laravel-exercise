@@ -18,9 +18,17 @@ use App\Http\Controllers\StudentController;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
-Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
-Route::get('/logout', [LoginController::class,'logout'])->name('logout');
-Route::get('/student', [StudentController::class, 'index'])->name('student_list');
+Route::controller(LoginController::class)->group(function () {
+    Route::get('/login', 'getLogin')->name('login');
+    Route::post('/login', 'postLogin')->name('post_login');
+    Route::get('/logout', 'logout')->name('logout');
+});
+Route::controller(StudentController::class)->group(function () {
+    Route::get('/student', 'index')->name('student_list');
+    Route::get('/student/detail/{student}', 'getDetail')->name('student_detail');
+    Route::get('/student/update/{student}', 'update')->name('student_update');
+    Route::get('/student/create', 'getCreate')->name('student_get_create');
+    Route::post('/student/create', 'store')->name('student_create');
+});
 
 

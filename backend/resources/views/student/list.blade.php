@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Student Detail</title>
+    <title>Student List</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -29,7 +29,7 @@
 
     </form>
     <div class="flex flex-row-reverse px-5">
-        <button class="px-4 py-2 bg-green-500 text-center border rounded-md">Add Student</button>
+        <a class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500 px-4 py-2 bg-red-300"" href={{route('student_get_create')}}>Add student</a>
     </div>
     <div class="w-8/12 m-auto mt-10">
         <table class="table-auto w-full border">
@@ -43,6 +43,7 @@
                 @endforeach
                 <th>GPA</th>
                 <th>Pass</th>
+                <th>Option</th>
             </tr>
             </thead>
             <tbody>
@@ -56,14 +57,15 @@
                     @endforeach
                     <td class="text-center">{{ $student->grade_avg }}</td>
                     <td class="text-center">{{$student->checkPass()}}</td>
+                    <td class="text-center">
+                        <a class="btn btn-primary" href={{route('student_detail',$student)}}>Edit</a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
         </table>
         <div class="mt-5">  {{ $students->links() }}</div>
-
     </div>
-
 </div>
 </body>
 </html>

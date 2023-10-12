@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Student extends Model
 {
+    protected $fillable = [
+        'name',
+        'birthday',
+    ];
+
+    public $timestamps = false;
     /**
      * Get grades of student
      * @return HasMany
