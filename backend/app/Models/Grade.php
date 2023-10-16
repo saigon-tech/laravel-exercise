@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Grade extends Model
 {
+    protected $fillable = [
+        'subject',
+        'grade'
+    ];
+    public $timestamps = false;
+
     /**
      * Get the student owns the grades
      * @return BelongsTo

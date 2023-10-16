@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use  App\Http\Controllers\LoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\StudentController;
 
 /*
@@ -18,8 +18,40 @@ use App\Http\Controllers\StudentController;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
-Route::get('/login', [LoginController::class, 'getLogin'])->name('login');
-Route::post('/login', [LoginController::class, 'postLogin'])->name('post_login');
-Route::get('/logout', [LoginController::class,'logout'])->name('logout');
-Route::get('/student', [StudentController::class, 'index'])->name('student_list');
+
+//  Authentication
+Route::prefix('login')
+    ->controller(LoginController::class)
+    ->name('login.')
+    ->group(function () {
+        Route::get('', 'getLogin')->name('get');
+        Route::post('', 'postLogin')->name('post');
+    });
+
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
+
+//  Display student information
+Route::prefix('student')
+    ->controller(StudentController::class)
+    ->middleware(['auth.admin'])
+    ->name('student.')
+    ->group(function () {
+
+        //  Student list
+        Route::get('', 'index')->name('list');
+
+        //  Student creation
+        Route::prefix('create')
+            ->group(function () {
+                Route::get('', 'getCreate')->name('create');
+
+                Route::post('', 'store')->name('store');
+            });
+
+        //  Student detail
+        Route::get('detail/{student}', 'getDetail')->name('detail');
+
+        //  Student update
+        Route::get('update/{student}', 'update')->name('update');
+    });
 
