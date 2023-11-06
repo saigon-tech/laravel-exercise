@@ -61,6 +61,12 @@
             "php-http/discovery": true
         }
     },
+    "repository":{
+            "mageworx": {
+                "type": "artifact",
+                "url": "/vendor/composer/"
+            }
+    },
     "minimum-stability": "stable",
     "prefer-stable": true
 }
