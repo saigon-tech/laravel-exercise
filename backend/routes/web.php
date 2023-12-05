@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Public routes
+include_once __DIR__.'/web/auth.php';
+
+// Protected routes
+Route::middleware('auth')->group(function () {
+    // Dashboard
+    Route::redirect('/', '/dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
+
+    // Projects
+    include_once __DIR__.'/web/projects.php';
 });
