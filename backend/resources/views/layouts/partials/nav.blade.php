@@ -16,7 +16,7 @@
                     <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Members') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Tasks') }}</a>
+                    <a class="nav-link" href="{{ route('tasks.index') }}">{{ __('Tasks') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('dashboard') }}">{{ __('Attendances') }}</a>

@@ -16,4 +16,18 @@ class Task extends Model
 {
     use HasFactory;
     use SoftDeletes;
+    
+    // scopes search by keyword in name and description
+    public function scopeSearch($query, ?string $keyword): void
+    {
+        // if keyword is empty, do nothing
+        if (empty($keyword)) {
+            return;
+        }
+        // if keyword is not empty, search by keyword in name and description
+        $query->where(function ($query) use ($keyword) {
+            $query->where('name', 'LIKE', '%'.$keyword.'%')
+                ->orWhere('description', 'LIKE', '%'.$keyword.'%');
+        });
+    }
 }

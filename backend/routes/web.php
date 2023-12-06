@@ -25,4 +25,7 @@ Route::middleware('auth')->group(function () {
 
     // Projects
     include_once __DIR__.'/web/projects.php';
+    
+    // Tasks
+    include_once __DIR__.'/web/tasks.php';
 });
